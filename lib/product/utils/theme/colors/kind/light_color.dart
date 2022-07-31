@@ -22,7 +22,7 @@ class LightColors implements IColors {
   Color? tabbarSelectedColor;
 
   LightColors() {
-    appBarColor = Colors.black;
+    appBarColor = colors.appbarbg;
     scaffoldBackgroundColor = colors.white;
     tabBarColor = colors.green;
     tabbarNormalColor = colors.darkerGrey;

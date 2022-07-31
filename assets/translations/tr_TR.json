@@ -1,0 +1,13 @@
+{
+    "tabbar": {
+        "customer": "Danışanlar",
+        "professional": "Profesyoneller"
+    },
+    "appbar": {
+        "title": "Mesajlarım"
+    },
+    "navbar": {
+        "home": "Anasayfa", 
+        "messages": "Mesajlarım"
+    }
+}

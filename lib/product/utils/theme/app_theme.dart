@@ -29,11 +29,11 @@ abstract class ThemeManager {
 
   static AppBarTheme _appBarTheme(ITheme theme) {
     return AppBarTheme(
-        foregroundColor: Colors.white,
+        foregroundColor: theme.colors.colors.appbarbg,
         titleSpacing: 50,
         titleTextStyle: const TextStyle(fontWeight: FontWeight.w800, color: Colors.black, fontSize: 18),
         backgroundColor: theme.colors.appBarColor,
-        iconTheme: const IconThemeData(color: Colors.white));
+        iconTheme: IconThemeData(color: theme.colors.colorScheme?.primary));
   }
 }
 
