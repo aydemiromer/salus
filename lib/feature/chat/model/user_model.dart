@@ -8,8 +8,9 @@ class User with EquatableMixin {
   String? name;
   String? surname;
   String? status;
+  String? assignment;
 
-  User({this.userID, this.name, this.surname, this.status});
+  User({this.userID, this.name, this.surname, this.status, this.assignment});
 
   @override
   User fromJson(Map<String, dynamic> json) {
@@ -21,16 +22,17 @@ class User with EquatableMixin {
       : userID = map['userID'],
         name = map['name'],
         surname = map['surname'],
-        status = map['status'];
+        status = map['status'],
+        assignment = map['assignment'];
 
   @override
   Map<String, dynamic> toMap() {
-    return {'userID': userID, 'name': name, 'surname': surname, 'status': status};
+    return {'userID': userID, 'name': name, 'surname': surname, 'status': status, 'assignment': assignment};
   }
 
   @override
   String toString() {
-    return 'User{userID: $userID, name: $name, surname: $surname}';
+    return 'User{userID: $userID, name: $name, surname: $surname, status: $status, assignment = $assignment}';
   }
 
   @override
@@ -40,6 +42,6 @@ class User with EquatableMixin {
 
   @override
   List<Object?> get props {
-    return [userID, name, surname];
+    return [userID, name, surname, status, assignment];
   }
 }
