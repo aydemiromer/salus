@@ -13,7 +13,6 @@ abstract class ITextTheme {
   TextStyle? subtitle2;
   TextStyle? bodyText1;
   TextStyle? bodyText2;
-  String? fontFamily;
 
   ITextTheme(this.primaryColor);
 }

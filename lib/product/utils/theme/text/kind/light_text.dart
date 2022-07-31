@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import '../../colors/color_manager.dart';
 import '../text_theme.dart';
 
@@ -10,7 +11,7 @@ class TextThemeLight implements ITextTheme {
   late final TextStyle? headline4;
 
   @override
-  late final String? fontFamily;
+  late final GoogleFonts? fontFamily;
 
   @override
   TextStyle? headline1 = const TextStyle(fontSize: 32, fontWeight: FontWeight.w800);
@@ -42,7 +43,7 @@ class TextThemeLight implements ITextTheme {
   @override
   final Color? primaryColor;
 
-  TextThemeLight(this.primaryColor, this.fontFamily, {IColors? colorTheme}) {
+  TextThemeLight(this.primaryColor, {IColors? colorTheme}) {
     subtitle1 = subtitle1?.apply(color: colorTheme?.colors.mediumGrey);
     subtitle2 = subtitle2?.apply(color: colorTheme?.colors.mediumGrey);
     headline5 = headline5?.apply(color: colorTheme?.colors.mediumGrey);

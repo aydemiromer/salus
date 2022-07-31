@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:salus/product/utils/theme/text/kind/light_text.dart';
 
 import 'colors/color_manager.dart';
 import 'text/text_theme.dart';
@@ -10,7 +11,6 @@ abstract class ITheme {
 
 abstract class ThemeManager {
   static ThemeData createTheme(ITheme theme) => ThemeData(
-      fontFamily: theme.textTheme.fontFamily,
       textTheme: theme.textTheme.data,
       cardColor: theme.colors.colorScheme?.onSecondary,
       bottomAppBarColor: theme.colors.scaffoldBackgroundColor,
@@ -42,7 +42,9 @@ class AppThemeLight extends ITheme {
   late final ITextTheme textTheme;
 
   AppThemeLight() {
-    // textTheme = TextThemeLight(colors.colors.mediumGrey,);
+    textTheme = TextThemeLight(
+      colors.colors.mediumGrey,
+    );
   }
 
   @override
