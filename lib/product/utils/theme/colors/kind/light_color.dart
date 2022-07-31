@@ -34,7 +34,7 @@ class LightColors implements IColors {
         secondary: Colors.black,
         surface: colors.green,
         error: Colors.red,
-        onBackground: colors.appbarbg,
+        onBackground: colors.background,
         tertiaryContainer: Colors.blue,
         onTertiary: colors.white,
         tertiary: colors.green,

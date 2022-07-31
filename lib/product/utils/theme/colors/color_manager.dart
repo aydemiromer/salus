@@ -21,6 +21,7 @@ class _AppColors {
   final Color darkGreen = const Color(0xff004834);
   final Color yellow = const Color(0xffAC7201);
   final Color lightYellow = const Color(0xffFEF5CC);
+  final Color background = const Color(0xffEDEEED);
 }
 
 abstract class IColors {
