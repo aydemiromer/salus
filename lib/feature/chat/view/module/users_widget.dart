@@ -36,8 +36,9 @@ class MyUserList extends StatelessWidget {
                   alignment: Alignment.bottomRight,
                   child: CircleAvatar(
                     radius: 8,
-                    backgroundColor:
-                        user.status.toString() == "Çevrimiçi" ? context.colorScheme.surface : Colors.transparent,
+                    backgroundColor: user.status.toString() == LocaleKeys.status_online.tr()
+                        ? context.colorScheme.surface
+                        : Colors.transparent,
                   ))
             ],
           )),
