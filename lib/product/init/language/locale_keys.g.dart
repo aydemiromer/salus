@@ -9,5 +9,8 @@ abstract class  LocaleKeys {
   static const navbar_home = 'navbar.home';
   static const navbar_messages = 'navbar.messages';
   static const navbar = 'navbar';
+  static const status_online = 'status.online';
+  static const status_offline = 'status.offline';
+  static const status = 'status';
 
 }

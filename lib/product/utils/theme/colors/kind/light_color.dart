@@ -36,7 +36,7 @@ class LightColors implements IColors {
         error: Colors.red,
         onBackground: colors.background,
         tertiaryContainer: Colors.blue,
-        onTertiary: colors.white,
+        onTertiary: colors.mediumGreen,
         tertiary: colors.green,
         onInverseSurface: colors.lightGrey,
         onSurface: colors.mediumGreyBold);

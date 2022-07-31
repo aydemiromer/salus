@@ -2,6 +2,7 @@ part of 'chat_cubit.dart';
 
 class ChatState extends Equatable {
   final List? userList;
+  
 
   const ChatState({this.userList});
 

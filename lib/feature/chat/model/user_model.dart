@@ -7,8 +7,9 @@ class User with EquatableMixin {
   String? userID;
   String? name;
   String? surname;
+  String? status;
 
-  User({this.userID, this.name, this.surname});
+  User({this.userID, this.name, this.surname, this.status});
 
   @override
   User fromJson(Map<String, dynamic> json) {
@@ -19,15 +20,12 @@ class User with EquatableMixin {
   User.fromMap(Map<String, dynamic> map)
       : userID = map['userID'],
         name = map['name'],
-        surname = map['surname'];
+        surname = map['surname'],
+        status = map['status'];
 
   @override
   Map<String, dynamic> toMap() {
-    return {
-      'userID': userID,
-      'name': name,
-      'surname': surname,
-    };
+    return {'userID': userID, 'name': name, 'surname': surname, 'status': status};
   }
 
   @override

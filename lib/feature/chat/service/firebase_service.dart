@@ -22,4 +22,12 @@ class FireStoreService extends IFirebaseService {
 
     return myUsers;
   }
+
+  @override
+  Future setStatus(String userID, String status) async {
+    try {
+      await fireStore.collection('users').doc(userID).update({"status": status});
+    } catch (error) {}
+    return null;
+  }
 }

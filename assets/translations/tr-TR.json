@@ -9,5 +9,9 @@
     "navbar": {
         "home": "Anasayfa",
         "messages": "Mesajlarım"
+    },
+    "status": {
+        "online": "Çevrimiçi",
+        "offline": "Çevrimdışı"
     }
 }
