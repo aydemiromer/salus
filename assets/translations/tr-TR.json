@@ -13,5 +13,12 @@
     "status": {
         "online": "Çevrimiçi",
         "offline": "Çevrimdışı"
+    },
+    "assignment": {
+        "new": "Yeni Eşleşme",
+        "appoinment": "Randevu Bekliyor",
+        "appoinmentConfirm": "Randevu Ayarlandı",
+        "trip": "Yolculuk Atandı",
+        "therapist": "Terapist Atandı"
     }
 }

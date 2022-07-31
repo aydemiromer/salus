@@ -45,11 +45,30 @@ class MyUserList extends StatelessWidget {
                   ))
             ],
           )),
-      title: ProductText.semiBoldNormal(
-        user.name.toString(),
-        context: context,
+      title: Row(
+        children: [
+          ProductText.semiBoldNormal(
+            user.name.toString(),
+            context: context,
+          ),
+          _assignmentStatusCard(context, user)
+        ],
       ),
       subtitle: const Text(""),
+    );
+  }
+
+  SizedBox _assignmentStatusCard(BuildContext context, User user) {
+    return SizedBox(
+      child: Card(
+        color: state.colorCondition(context, user.assignment.toString()),
+        child: Padding(
+          padding: const PagePadding.allLow(),
+          child: Text(
+            user.assignment.toString(),
+          ),
+        ),
+      ),
     );
   }
 }
