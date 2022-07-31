@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "985016749874",
+    "project_id": "salus-7a691",
+    "storage_bucket": "salus-7a691.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:985016749874:android:ee61d4e4199226a5c0d12b",
+        "android_client_info": {
+          "package_name": "com.example.salus"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "985016749874-sd71bb1rkle52pl5c625uhvg65mpchk8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCf8MwuCVLYKlaOcAqgAZY0zJpavU9vfdk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "985016749874-sd71bb1rkle52pl5c625uhvg65mpchk8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
