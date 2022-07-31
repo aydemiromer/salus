@@ -28,13 +28,13 @@ class LightColors implements IColors {
     tabbarNormalColor = colors.darkerGrey;
     tabbarSelectedColor = colors.green;
     colorScheme = const ColorScheme.light().copyWith(
-        primary: colors.darkGrey,
-        onPrimary: colors.darkerGrey,
+        primary: colors.red,
+        onPrimary: colors.lightRed,
         onSecondary: colors.white,
         secondary: Colors.black,
         surface: colors.green,
         error: Colors.red,
-        onBackground: colors.lightGrey,
+        onBackground: colors.appbarbg,
         tertiaryContainer: Colors.blue,
         onTertiary: colors.white,
         tertiary: colors.green,

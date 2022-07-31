@@ -1,8 +1,8 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:salus/feature/chat/view/chat_view.dart';
 import 'package:salus/product/initialize/project_initialize.dart';
 import 'package:salus/product/utils/theme/app_theme.dart';
+import 'package:salus/product/widget/navbar/navbar_widget.dart';
 
 Future<void> main() async {
   final IProjectInitialize appInitialize = ProjectInitialize();
@@ -25,6 +25,6 @@ class MyApp extends StatelessWidget {
         supportedLocales: context.supportedLocales,
         locale: context.locale,
         theme: ThemeManager.createTheme(AppThemeLight()),
-        home: const ChatView());
+        home: const Navbar());
   }
 }
