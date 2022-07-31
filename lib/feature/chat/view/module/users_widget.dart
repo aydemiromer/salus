@@ -8,12 +8,15 @@ class MyUserList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       color: context.colorScheme.background,
-      height: context.dynamicHeight(.7),
+      height: context.dynamicHeight(.715),
       child: ListView.builder(
           itemCount: state.userList?.length ?? 0,
           itemBuilder: ((context, index) {
             User user = state.userList?[index];
-            return ColumnWithSpacing(space: 10, children: [_userListTile(context, user), const GrayDivider()]);
+            return ColumnWithSpacing(space: 10, children: [
+              _userListTile(context, user),
+              const GrayDivider(),
+            ]);
           })),
     );
   }
