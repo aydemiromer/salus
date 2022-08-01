@@ -14,7 +14,17 @@ class MyUserList extends StatelessWidget {
           itemBuilder: ((context, index) {
             User user = state.userList?[index];
             return ColumnWithSpacing(space: 10, children: [
-              _userListTile(context, user),
+              GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => ChatDetailView(
+                                model: user,
+                              )),
+                    );
+                  },
+                  child: _userListTile(context, user)),
               const GrayDivider(),
             ]);
           })),
@@ -54,7 +64,10 @@ class MyUserList extends StatelessWidget {
           _assignmentStatusCard(context, user)
         ],
       ),
-      subtitle: const Text(""),
+      subtitle: const Text(
+        "Lorem İpsum Lorem İpsum Lorem İpsummm Lorem İpsum  Lorem İpsum  Lorem İpsum",
+        overflow: TextOverflow.ellipsis,
+      ),
     );
   }
 

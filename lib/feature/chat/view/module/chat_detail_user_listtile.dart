@@ -1,0 +1,56 @@
+part of '../chat_detail_view.dart';
+
+class _DetailListTile extends StatelessWidget {
+  const _DetailListTile({Key? key, required this.user, required this.state}) : super(key: key);
+  final User user;
+  final ChatState state;
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+        leading: CircleAvatar(
+            radius: 30,
+            backgroundColor: context.colorScheme.onTertiary,
+            child: Align(
+              alignment: Alignment.center,
+              child: ProductText.semiBoldNormal(
+                '${user.name?[0]} ${user.surname?[0]} ',
+                context: context,
+              ),
+            )),
+        trailing: _assignmentStatusCard(context, user, state),
+        title: Row(
+          children: [
+            ProductText.semiBoldNormal(
+              user.name.toString(),
+              context: context,
+            ),
+          ],
+        ),
+        subtitle: Row(
+          children: [
+            CircleAvatar(
+              radius: 5,
+              backgroundColor: user.status.toString() == LocaleKeys.status_online.tr()
+                  ? context.colorScheme.surface
+                  : Colors.transparent,
+            ),
+            context.emptySizedWidthBoxLow,
+            ProductText(user.status.toString())
+          ],
+        ));
+  }
+}
+
+SizedBox _assignmentStatusCard(BuildContext context, User user, state) {
+  return SizedBox(
+    child: Card(
+      color: state.colorCondition(context, user.assignment.toString()),
+      child: Padding(
+        padding: const PagePadding.allLow(),
+        child: Text(
+          user.assignment.toString(),
+        ),
+      ),
+    ),
+  );
+}
