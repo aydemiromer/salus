@@ -2,7 +2,6 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:salus/product/initialize/language_initialize.dart';
 import 'package:firebase_core/firebase_core.dart';
-import '../../feature/chat/service/Ifirebase_service.dart';
 import '../../firebase_options.dart';
 
 abstract class IProjectInitialize {

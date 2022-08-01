@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:salus/core/utility/padding/page_padding.dart';
 import 'package:salus/core/widget/button/custom_elevated_button.dart';
 import 'package:salus/feature/chat/cubit/chat_cubit.dart';
+import 'package:salus/feature/chat/view/chat_detail_view.dart';
 import 'package:salus/product/init/language/locale_keys.g.dart';
 import 'package:salus/product/utils/text/product_text.dart';
 import 'package:salus/product/widget/appBar/app_bar_widget.dart';
