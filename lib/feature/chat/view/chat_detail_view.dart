@@ -61,57 +61,60 @@ Widget _body(BuildContext context, User user, textController) => BlocBuilder<Cha
           children: [
             _DetailListTile(user: user, state: state),
             const GrayDivider(),
-            context.emptySizedHeightBoxHigh,
             Expanded(
-                child: StreamBuilder<List<ChatModel>>(
-              stream: context.read<ChatCubit>().getMessages("NBfK00HIJdQJkswnarTm5OIZwpr2", user.userID.toString()),
-              builder: (context, x) {
-                var allMessages = x.data;
+                child: Container(
+              color: context.colorScheme.background,
+              child: StreamBuilder<List<ChatModel>>(
+                stream: context.read<ChatCubit>().getMessages("NBfK00HIJdQJkswnarTm5OIZwpr2", user.userID.toString()),
+                builder: (context, x) {
+                  var allMessages = x.data;
 
-                return ListView.builder(
-                    itemBuilder: ((context, index) {
-                      //return Text(allMessages?[index].message ?? '');
-                      return _chatMessages(allMessages?[index] ?? ChatModel(), context);
-                    }),
-                    itemCount: allMessages?.length ?? 0);
-              },
+                  return ListView.builder(
+                      itemBuilder: ((context, index) {
+                        //return Text(allMessages?[index].message ?? '');
+                        return _chatMessages(allMessages?[index] ?? ChatModel(), context);
+                      }),
+                      itemCount: allMessages?.length ?? 0);
+                },
+              ),
             )),
             Padding(
-              padding: const PagePadding.allNormal(),
-              child: Row(
-                children: [
-                  Expanded(
-                      child: TextField(
-                    controller: textController,
-                  )),
-                  IconButton(
-                      onPressed: () async {
-                        if (textController.text.trim().length > 0) {
-                          ChatModel currentMessage = ChatModel(
-                              getter: user.userID,
-                              sender: "NBfK00HIJdQJkswnarTm5OIZwpr2",
-                              whoIsThis: true,
-                              message: textController.text);
-                          var result = await context
-                              .read<ChatCubit>()
-                              .saveMessages(currentMessage, "NBfK00HIJdQJkswnarTm5OIZwpr2");
+              padding: const PagePadding.allLow2x(),
+              child: Container(
+                color: context.colorScheme.background,
+                child: Row(
+                  children: [
+                    Expanded(
+                        child: TextField(
+                      controller: textController,
+                    )),
+                    IconButton(
+                        color: context.colorScheme.surface,
+                        onPressed: () async {
+                          if (textController.text.trim().length > 0) {
+                            ChatModel currentMessage = ChatModel(
+                                getter: user.userID,
+                                sender: "NBfK00HIJdQJkswnarTm5OIZwpr2",
+                                whoIsThis: true,
+                                message: textController.text);
+                            var result = await context
+                                .read<ChatCubit>()
+                                .saveMessages(currentMessage, "NBfK00HIJdQJkswnarTm5OIZwpr2");
 
-                          if (result) {
-                            textController.clear();
+                            if (result) {
+                              textController.clear();
+                            }
                           }
-                        }
-                      },
-                      icon: const Icon(Icons.send))
-                ],
+                        },
+                        icon: const Icon(Icons.send))
+                  ],
+                ),
               ),
             )
           ],
         )));
 
 Widget _chatMessages(ChatModel model, BuildContext context) {
-  Color gelenRenk = Colors.purple;
-  Color gidenRenk = Colors.blue;
-
   var benimMesajimMi = model.whoIsThis;
   if (benimMesajimMi!) {
     return Padding(
@@ -120,7 +123,8 @@ Widget _chatMessages(ChatModel model, BuildContext context) {
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           Container(
-            decoration: BoxDecoration(borderRadius: BorderRadius.circular(20), color: gidenRenk),
+            padding: const PagePadding.allLow(),
+            decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: context.colorScheme.onTertiary),
             child: ProductText.semiBoldNormal(
               model.message.toString(),
               context: context,
@@ -136,8 +140,9 @@ Widget _chatMessages(ChatModel model, BuildContext context) {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            decoration: BoxDecoration(borderRadius: BorderRadius.circular(20), color: gelenRenk),
-            child: ProductText.semiBoldNormal(
+            padding: const PagePadding.allLow(),
+            decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: context.colorScheme.onTertiary),
+            child: ProductText.normalGreyWithBoldOption(
               model.message.toString(),
               context: context,
             ),
