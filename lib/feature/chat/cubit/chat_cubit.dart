@@ -3,6 +3,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kartal/kartal.dart';
+import 'package:salus/feature/chat/model/chat_model.dart';
 import 'package:salus/feature/chat/model/user_model.dart';
 import 'package:salus/feature/chat/service/Ifirebase_service.dart';
 
@@ -22,6 +23,18 @@ class ChatCubit extends Cubit<ChatState> {
   Future<List<User>> getUsersFromFirebase() async {
     final response = await firebaseService.userList();
     emit(state.copyWith(userList: response));
+    return response;
+  }
+
+  Stream<List<ChatModel>> getMessages(String userID, String otherUserID) {
+    final response = firebaseService.getChatMessages(userID, otherUserID);
+    emit(state.copyWith(messageList: response));
+    return response;
+  }
+
+  Future<bool> saveMessages(ChatModel message, String userID) {
+    final response = firebaseService.saveMessage(message, userID);
+    //emit(state.copyWith(messageList: response));
     return response;
   }
 

@@ -10,18 +10,35 @@ import '../../../product/init/language/locale_keys.g.dart';
 import '../../../product/utils/text/product_text.dart';
 import '../../../product/widget/appBar/app_bar_widget.dart';
 import '../cubit/chat_cubit.dart';
+import '../model/chat_model.dart';
 import '../model/user_model.dart';
 import '../service/firebase_service.dart';
 part 'module/chat_detail_user_listtile.dart';
 
 class ChatDetailView extends StatefulWidget {
-  const ChatDetailView({Key? key, required this.model}) : super(key: key);
+  const ChatDetailView({Key? key, required this.model, this.chatUser, this.currentUser}) : super(key: key);
   final User model;
+  final User? currentUser;
+  final User? chatUser;
   @override
   State<ChatDetailView> createState() => _ChatDetailViewState();
 }
 
 class _ChatDetailViewState extends State<ChatDetailView> {
+  @override
+  TextEditingController? _textController;
+  @override
+  void initState() {
+    super.initState();
+    _textController = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    _textController?.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -32,17 +49,101 @@ class _ChatDetailViewState extends State<ChatDetailView> {
         child: Scaffold(
           backgroundColor: context.colorScheme.onBackground,
           appBar: _appbar,
-          body: _body(context, widget.model),
+          body: _body(context, widget.model, _textController),
         ));
   }
 }
 
 AppBarWidget get _appbar => AppBarWidget();
 
-Widget _body(BuildContext context, user) => BlocBuilder<ChatCubit, ChatState>(
+Widget _body(BuildContext context, User user, textController) => BlocBuilder<ChatCubit, ChatState>(
     builder: ((context, state) => Column(
           children: [
             _DetailListTile(user: user, state: state),
             const GrayDivider(),
+            context.emptySizedHeightBoxHigh,
+            Expanded(
+                child: StreamBuilder<List<ChatModel>>(
+              stream: context.read<ChatCubit>().getMessages("NBfK00HIJdQJkswnarTm5OIZwpr2", user.userID.toString()),
+              builder: (context, x) {
+                var allMessages = x.data;
+
+                return ListView.builder(
+                    itemBuilder: ((context, index) {
+                      //return Text(allMessages?[index].message ?? '');
+                      return _chatMessages(allMessages?[index] ?? ChatModel(), context);
+                    }),
+                    itemCount: allMessages?.length ?? 0);
+              },
+            )),
+            Padding(
+              padding: const PagePadding.allNormal(),
+              child: Row(
+                children: [
+                  Expanded(
+                      child: TextField(
+                    controller: textController,
+                  )),
+                  IconButton(
+                      onPressed: () async {
+                        if (textController.text.trim().length > 0) {
+                          ChatModel currentMessage = ChatModel(
+                              getter: user.userID,
+                              sender: "NBfK00HIJdQJkswnarTm5OIZwpr2",
+                              whoIsThis: true,
+                              message: textController.text);
+                          var result = await context
+                              .read<ChatCubit>()
+                              .saveMessages(currentMessage, "NBfK00HIJdQJkswnarTm5OIZwpr2");
+
+                          if (result) {
+                            textController.clear();
+                          }
+                        }
+                      },
+                      icon: const Icon(Icons.send))
+                ],
+              ),
+            )
           ],
         )));
+
+Widget _chatMessages(ChatModel model, BuildContext context) {
+  Color gelenRenk = Colors.purple;
+  Color gidenRenk = Colors.blue;
+
+  var benimMesajimMi = model.whoIsThis;
+  if (benimMesajimMi!) {
+    return Padding(
+      padding: const PagePadding.allLow(),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: [
+          Container(
+            decoration: BoxDecoration(borderRadius: BorderRadius.circular(20), color: gidenRenk),
+            child: ProductText.semiBoldNormal(
+              model.message.toString(),
+              context: context,
+            ),
+          )
+        ],
+      ),
+    );
+  } else {
+    return Padding(
+      padding: const PagePadding.allLow(),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            decoration: BoxDecoration(borderRadius: BorderRadius.circular(20), color: gelenRenk),
+            child: ProductText.semiBoldNormal(
+              model.message.toString(),
+              context: context,
+            ),
+          )
+        ],
+      ),
+    );
+  }
+}

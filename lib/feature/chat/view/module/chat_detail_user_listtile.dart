@@ -1,9 +1,10 @@
 part of '../chat_detail_view.dart';
 
 class _DetailListTile extends StatelessWidget {
-  const _DetailListTile({Key? key, required this.user, required this.state}) : super(key: key);
+  const _DetailListTile({Key? key, required this.user, required this.state,}) : super(key: key);
   final User user;
   final ChatState state;
+ 
   @override
   Widget build(BuildContext context) {
     return ListTile(
