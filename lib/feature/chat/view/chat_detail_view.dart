@@ -14,6 +14,8 @@ import '../model/chat_model.dart';
 import '../model/user_model.dart';
 import '../service/firebase_service.dart';
 part 'module/chat_detail_user_listtile.dart';
+part 'module/chat_messages.dart';
+part 'module/chat_textfield.dart';
 
 class ChatDetailView extends StatefulWidget {
   const ChatDetailView({Key? key, required this.model, this.chatUser, this.currentUser}) : super(key: key);
@@ -68,87 +70,17 @@ Widget _body(BuildContext context, User user, textController) => BlocBuilder<Cha
                 stream: context.read<ChatCubit>().getMessages("NBfK00HIJdQJkswnarTm5OIZwpr2", user.userID.toString()),
                 builder: (context, x) {
                   var allMessages = x.data;
-
                   return ListView.builder(
                       itemBuilder: ((context, index) {
-                        //return Text(allMessages?[index].message ?? '');
-                        return _chatMessages(allMessages?[index] ?? ChatModel(), context);
+                        return _ChatMessagesState(model: allMessages?[index] ?? ChatModel());
                       }),
                       itemCount: allMessages?.length ?? 0);
                 },
               ),
             )),
-            Padding(
-              padding: const PagePadding.allLow2x(),
-              child: Container(
-                color: context.colorScheme.background,
-                child: Row(
-                  children: [
-                    Expanded(
-                        child: TextField(
-                      controller: textController,
-                    )),
-                    IconButton(
-                        color: context.colorScheme.surface,
-                        onPressed: () async {
-                          if (textController.text.trim().length > 0) {
-                            ChatModel currentMessage = ChatModel(
-                                getter: user.userID,
-                                sender: "NBfK00HIJdQJkswnarTm5OIZwpr2",
-                                whoIsThis: true,
-                                message: textController.text);
-                            var result = await context
-                                .read<ChatCubit>()
-                                .saveMessages(currentMessage, "NBfK00HIJdQJkswnarTm5OIZwpr2");
-
-                            if (result) {
-                              textController.clear();
-                            }
-                          }
-                        },
-                        icon: const Icon(Icons.send))
-                  ],
-                ),
-              ),
+            ChatTextField(
+              user: user,
+              textController: textController,
             )
           ],
         )));
-
-Widget _chatMessages(ChatModel model, BuildContext context) {
-  var benimMesajimMi = model.whoIsThis;
-  if (benimMesajimMi!) {
-    return Padding(
-      padding: const PagePadding.allLow(),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.end,
-        children: [
-          Container(
-            padding: const PagePadding.allLow(),
-            decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: context.colorScheme.onTertiary),
-            child: ProductText.semiBoldNormal(
-              model.message.toString(),
-              context: context,
-            ),
-          )
-        ],
-      ),
-    );
-  } else {
-    return Padding(
-      padding: const PagePadding.allLow(),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            padding: const PagePadding.allLow(),
-            decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: context.colorScheme.onTertiary),
-            child: ProductText.normalGreyWithBoldOption(
-              model.message.toString(),
-              context: context,
-            ),
-          )
-        ],
-      ),
-    );
-  }
-}
