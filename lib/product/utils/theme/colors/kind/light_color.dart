@@ -34,12 +34,12 @@ class LightColors implements IColors {
         onSecondary: colors.white,
         secondary: Colors.black,
         surface: colors.green,
-        error: Colors.red,
+        error: colors.red,
         onBackground: colors.background,
         tertiaryContainer: Colors.blue,
         onTertiary: colors.mediumGreen,
         tertiary: colors.green,
-        onInverseSurface: colors.lightGrey,
+        onInverseSurface: colors.lighterGreen,
         onSurface: colors.mediumGreyBold);
 
     brightness = Brightness.light;
