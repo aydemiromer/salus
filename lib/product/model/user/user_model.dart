@@ -1,24 +1,26 @@
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
+import 'package:collection/collection.dart';
+
 part 'user_model.g.dart';
 
 @JsonSerializable()
-class User with EquatableMixin {
+class UserModel with EquatableMixin {
   String? userID;
   String? name;
   String? surname;
   String? status;
   String? assignment;
 
-  User({this.userID, this.name, this.surname, this.status, this.assignment});
+  UserModel({this.userID, this.name, this.surname, this.status, this.assignment});
 
   @override
-  User fromJson(Map<String, dynamic> json) {
-    return _$UserFromJson(json);
+  UserModel fromJson(Map<String, dynamic> json) {
+    return _$UserModelFromJson(json);
   }
 
   @override
-  User.fromMap(Map<String, dynamic> map)
+  UserModel.fromMap(Map<String, dynamic> map)
       : userID = map['userID'],
         name = map['name'],
         surname = map['surname'],
@@ -32,12 +34,12 @@ class User with EquatableMixin {
 
   @override
   String toString() {
-    return 'User{userID: $userID, name: $name, surname: $surname, status: $status, assignment = $assignment}';
+    return 'UserModel{userID: $userID, name: $name, surname: $surname, status: $status, assignment = $assignment}';
   }
 
   @override
   Map<String, dynamic>? toJson() {
-    return _$UserToJson(this);
+    return _$UserModelToJson(this);
   }
 
   @override
@@ -45,3 +47,4 @@ class User with EquatableMixin {
     return [userID, name, surname, status, assignment];
   }
 }
+

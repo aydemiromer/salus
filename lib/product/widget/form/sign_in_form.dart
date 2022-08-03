@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:kartal/kartal.dart';
 
 import '../../../core/utility/padding/page_padding.dart';
 import '../../../core/utility/size/widget_size.dart';
 import '../../../core/widget/button/loading_button.dart';
+import '../../state/user_context.dart';
 import '../navbar/navbar_widget.dart';
 
 typedef SignInSuccess = Future<void> Function(String email, String password);
@@ -73,6 +75,7 @@ class _SignInFormState extends State<SignInForm> {
             MaterialPageRoute(builder: (context) => const Navbar()),
           );
           await widget.onSuccses(_emailController.text, _passwordController.text);
+          
         } else {
           setState(() {
             isFirstValidate = true;
