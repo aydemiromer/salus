@@ -6,7 +6,7 @@ class _DetailListTile extends StatelessWidget {
     required this.user,
     required this.state,
   }) : super(key: key);
-  final User user;
+  final UserModel user;
   final ChatState state;
 
   @override
@@ -46,7 +46,7 @@ class _DetailListTile extends StatelessWidget {
   }
 }
 
-SizedBox _assignmentStatusCard(BuildContext context, User user, ChatState state) {
+SizedBox _assignmentStatusCard(BuildContext context, UserModel user, ChatState state) {
   return SizedBox(
     child: Card(
       color: state.colorCondition(context, user.assignment.toString()),

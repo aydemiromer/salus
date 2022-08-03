@@ -27,6 +27,7 @@ class ChatView extends StatefulWidget {
 
 class _ChatViewState extends State<ChatView> with WidgetsBindingObserver {
   String? status = LocaleKeys.status_online.tr();
+  
 
   @override
   void initState() {
@@ -53,7 +54,8 @@ class _ChatViewState extends State<ChatView> with WidgetsBindingObserver {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) {
-        return ChatCubit(FireStoreService(FirebaseFirestore.instance))..init("oAm1kmK128Wr4iY0gJzXHWDUDlq1", LocaleKeys.status_online.tr());
+        return ChatCubit(FireStoreService(FirebaseFirestore.instance))
+          ..init( LocaleKeys.status_online.tr());
       },
       child: Scaffold(
         backgroundColor: context.colorScheme.onBackground,

@@ -20,9 +20,9 @@ part 'module/chat_textfield.dart';
 
 class ChatDetailView extends StatefulWidget {
   const ChatDetailView({Key? key, required this.model, this.chatUser, this.currentUser}) : super(key: key);
-  final User model;
-  final User? currentUser;
-  final User? chatUser;
+  final UserModel model;
+  final UserModel? currentUser;
+  final UserModel? chatUser;
   @override
   State<ChatDetailView> createState() => _ChatDetailViewState();
 }
@@ -46,8 +46,7 @@ class _ChatDetailViewState extends State<ChatDetailView> {
   Widget build(BuildContext context) {
     return BlocProvider(
         create: (context) {
-          return ChatCubit(FireStoreService(FirebaseFirestore.instance))
-            ..init("oAm1kmK128Wr4iY0gJzXHWDUDlq1", LocaleKeys.status_online.tr());
+          return ChatCubit(FireStoreService(FirebaseFirestore.instance))..init(LocaleKeys.status_online.tr());
         },
         child: Scaffold(
           backgroundColor: context.colorScheme.onBackground,
@@ -59,12 +58,12 @@ class _ChatDetailViewState extends State<ChatDetailView> {
 
 AppBarWidget get _appbar => AppBarWidget();
 
-Widget _body(BuildContext context, User user, textController) => BlocBuilder<ChatCubit, ChatState>(
+Widget _body(BuildContext context, UserModel user, textController) => BlocBuilder<ChatCubit, ChatState>(
     builder: ((context, state) => Column(
           children: [
             _DetailListTile(user: user, state: state),
             const GrayDivider(),
-            _streamMessages(context, user),
+            _streamMessages(context, user, state),
             ChatTextField(
               user: user,
               textController: textController,
@@ -72,12 +71,12 @@ Widget _body(BuildContext context, User user, textController) => BlocBuilder<Cha
           ],
         )));
 
-Expanded _streamMessages(BuildContext context, User user) {
+Expanded _streamMessages(BuildContext context, UserModel user, ChatState state) {
   return Expanded(
       child: Container(
     color: context.colorScheme.background,
     child: StreamBuilder<List<ChatModel>>(
-      stream: context.read<ChatCubit>().getMessages("NBfK00HIJdQJkswnarTm5OIZwpr2", user.userID.toString()),
+      stream: context.read<ChatCubit>().getMessages(state.userUID.toString(), user.userID.toString()),
       builder: (context, streamMessages) {
         var allMessages = streamMessages.data;
         return ListView.builder(

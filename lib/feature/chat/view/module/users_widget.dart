@@ -12,7 +12,7 @@ class MyUserList extends StatelessWidget {
       child: ListView.builder(
           itemCount: state.userList?.length ?? 0,
           itemBuilder: ((context, index) {
-            User user = state.userList?[index];
+            UserModel user = state.userList?[index];
             return ColumnWithSpacing(space: 10, children: [
               GestureDetector(
                   onTap: () {
@@ -31,7 +31,7 @@ class MyUserList extends StatelessWidget {
     );
   }
 
-  ListTile _userListTile(BuildContext context, User user) {
+  ListTile _userListTile(BuildContext context, UserModel user) {
     return ListTile(
       leading: CircleAvatar(
           radius: 30,
@@ -71,7 +71,7 @@ class MyUserList extends StatelessWidget {
     );
   }
 
-  SizedBox _assignmentStatusCard(BuildContext context, User user) {
+  SizedBox _assignmentStatusCard(BuildContext context, UserModel user) {
     return SizedBox(
       child: Card(
         color: state.colorCondition(context, user.assignment.toString()),
