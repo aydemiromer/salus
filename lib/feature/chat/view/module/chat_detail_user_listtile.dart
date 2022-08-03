@@ -1,10 +1,14 @@
 part of '../chat_detail_view.dart';
 
 class _DetailListTile extends StatelessWidget {
-  const _DetailListTile({Key? key, required this.user, required this.state,}) : super(key: key);
+  const _DetailListTile({
+    Key? key,
+    required this.user,
+    required this.state,
+  }) : super(key: key);
   final User user;
   final ChatState state;
- 
+
   @override
   Widget build(BuildContext context) {
     return ListTile(
@@ -33,7 +37,7 @@ class _DetailListTile extends StatelessWidget {
               radius: 5,
               backgroundColor: user.status.toString() == LocaleKeys.status_online.tr()
                   ? context.colorScheme.surface
-                  : Colors.transparent,
+                  : context.colorScheme.primary,
             ),
             context.emptySizedWidthBoxLow,
             ProductText(user.status.toString())
@@ -42,15 +46,15 @@ class _DetailListTile extends StatelessWidget {
   }
 }
 
-SizedBox _assignmentStatusCard(BuildContext context, User user, state) {
+SizedBox _assignmentStatusCard(BuildContext context, User user, ChatState state) {
   return SizedBox(
     child: Card(
       color: state.colorCondition(context, user.assignment.toString()),
       child: Padding(
         padding: const PagePadding.allLow(),
-        child: Text(
+        child: ProductText(
           user.assignment.toString(),
-        ),
+        ).color(context.colorScheme.onSurface),
       ),
     ),
   );

@@ -9,7 +9,7 @@ class ChatState extends Equatable {
   Color colorCondition(BuildContext context, String status) => status == LocaleKeys.assignment_appoinment.tr()
       ? context.colorScheme.outline
       : status == LocaleKeys.assignment_new.tr()
-          ? context.colorScheme.surface
+          ? context.colorScheme.onInverseSurface
           : context.colorScheme.onSurface;
 
   @override

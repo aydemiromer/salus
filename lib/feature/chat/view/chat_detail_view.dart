@@ -3,6 +3,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kartal/kartal.dart';
+import 'package:salus/product/widget/chat/chat_box.dart';
 import 'package:salus/product/widget/divider/gray_divider.dart';
 
 import '../../../core/utility/padding/page_padding.dart';
@@ -63,24 +64,28 @@ Widget _body(BuildContext context, User user, textController) => BlocBuilder<Cha
           children: [
             _DetailListTile(user: user, state: state),
             const GrayDivider(),
-            Expanded(
-                child: Container(
-              color: context.colorScheme.background,
-              child: StreamBuilder<List<ChatModel>>(
-                stream: context.read<ChatCubit>().getMessages("NBfK00HIJdQJkswnarTm5OIZwpr2", user.userID.toString()),
-                builder: (context, x) {
-                  var allMessages = x.data;
-                  return ListView.builder(
-                      itemBuilder: ((context, index) {
-                        return _ChatMessagesState(model: allMessages?[index] ?? ChatModel());
-                      }),
-                      itemCount: allMessages?.length ?? 0);
-                },
-              ),
-            )),
+            _streamMessages(context, user),
             ChatTextField(
               user: user,
               textController: textController,
             )
           ],
         )));
+
+Expanded _streamMessages(BuildContext context, User user) {
+  return Expanded(
+      child: Container(
+    color: context.colorScheme.background,
+    child: StreamBuilder<List<ChatModel>>(
+      stream: context.read<ChatCubit>().getMessages("NBfK00HIJdQJkswnarTm5OIZwpr2", user.userID.toString()),
+      builder: (context, streamMessages) {
+        var allMessages = streamMessages.data;
+        return ListView.builder(
+            itemBuilder: ((context, index) {
+              return _ChatMessagesState(model: allMessages?[index] ?? ChatModel());
+            }),
+            itemCount: allMessages?.length ?? 0);
+      },
+    ),
+  ));
+}
