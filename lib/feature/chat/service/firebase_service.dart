@@ -8,14 +8,14 @@ class FireStoreService extends IFirebaseService {
   FireStoreService(FirebaseFirestore firestore) : super(firestore);
 
   @override
-  Future<List<User>> userList() async {
-    List<User> myUsers = [];
+  Future<List<UserModel>> userList() async {
+    List<UserModel> myUsers = [];
 
     try {
       QuerySnapshot querySnapshot = await fireStore.collection('users').get();
       for (DocumentSnapshot snap in querySnapshot.docs) {
         Map<String, dynamic> map = snap.data() as Map<String, dynamic>;
-        User tekUser = User.fromMap(map);
+        UserModel tekUser = UserModel.fromMap(map);
 
         myUsers.add(tekUser);
       }

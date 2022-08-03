@@ -8,7 +8,7 @@ abstract class IFirebaseService {
 
   IFirebaseService(this.fireStore);
 
-  Future<List<User>> userList();
+  Future<List<UserModel>> userList();
 
   Future setStatus(String userID, String status);
 
