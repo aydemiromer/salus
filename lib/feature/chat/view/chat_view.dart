@@ -13,7 +13,7 @@ import 'package:kartal/kartal.dart';
 import 'package:salus/product/widget/column/column_with_divider.dart';
 import 'package:salus/product/widget/divider/gray_divider.dart';
 
-import '../model/user_model.dart';
+import '../../../product/model/user/user_model.dart';
 import '../service/firebase_service.dart';
 part 'module/tabbar_widget.dart';
 part 'module/users_widget.dart';

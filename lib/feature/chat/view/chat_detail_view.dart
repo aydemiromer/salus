@@ -12,7 +12,7 @@ import '../../../product/utils/text/product_text.dart';
 import '../../../product/widget/appBar/app_bar_widget.dart';
 import '../cubit/chat_cubit.dart';
 import '../model/chat_model.dart';
-import '../model/user_model.dart';
+import '../../../product/model/user/user_model.dart';
 import '../service/firebase_service.dart';
 part 'module/chat_detail_user_listtile.dart';
 part 'module/chat_messages.dart';

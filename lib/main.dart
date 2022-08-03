@@ -25,6 +25,6 @@ class MyApp extends StatelessWidget {
         supportedLocales: context.supportedLocales,
         locale: context.locale,
         theme: ThemeManager.createTheme(AppThemeLight()),
-        home: AuthView());
+        home: const LoginView());
   }
 }
