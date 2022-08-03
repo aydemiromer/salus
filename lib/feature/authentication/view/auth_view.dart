@@ -18,39 +18,35 @@ class LoginView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-        create: (context) {
-          return AuthenticationCubit(AuthenticationService(FirebaseAuth.instance, GoogleLogin(), AppleSocialLogin()));
-        },
-        child: BlocConsumer<AuthenticationCubit, AuthtenticationState>(listener: (context, state) {
-          if (state is LoginComplete) {}
-        }, builder: (context, state) {
-          return Scaffold(
-            backgroundColor: context.colorScheme.primary,
-            body: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                const CustomNetworkImage(
-                    imageUrl: 'https://cobidu.co.uk/shared/images/general/57_mental-health_607219ac4f969.png'),
-                FormInputCard(
-                    margin: EdgeInsets.zero,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        ProductText.headline1("Welcome", context: context),
-                        const SizedBox(height: WidgetSizes.spacingM),
-                        SignInForm(
-                          onSuccses: (email, password) async {
-                            await context.read<AuthenticationCubit>().loginCustom(email, password);
-                          },
-                        ),
-                        context.emptySizedHeightBoxNormal
-                      ],
-                    ))
-              ],
-            ),
-          );
-        }));
+    return BlocProvider(create: (context) {
+      return AuthenticationCubit(AuthenticationService(FirebaseAuth.instance, GoogleLogin(), AppleSocialLogin()));
+    }, child: BlocBuilder<AuthenticationCubit, AuthtenticationState>(builder: (context, state) {
+      return Scaffold(
+        backgroundColor: context.colorScheme.primary,
+        body: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            const CustomNetworkImage(
+                imageUrl: 'https://cobidu.co.uk/shared/images/general/57_mental-health_607219ac4f969.png'),
+            FormInputCard(
+                margin: EdgeInsets.zero,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    ProductText.headline1("Welcome", context: context),
+                    const SizedBox(height: WidgetSizes.spacingM),
+                    SignInForm(
+                      onSuccses: (email, password) async {
+                        await context.read<AuthenticationCubit>().loginCustom(email, password);
+                      },
+                    ),
+                    context.emptySizedHeightBoxNormal
+                  ],
+                ))
+          ],
+        ),
+      );
+    }));
   }
 }
