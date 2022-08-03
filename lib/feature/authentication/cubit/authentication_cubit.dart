@@ -1,7 +1,10 @@
 import 'package:bloc/bloc.dart';
+import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../../product/state/user_context.dart';
 import '../model/login_model.dart';
 import '../model/register_model.dart';
 import '../service/auth_service.dart';
@@ -17,8 +20,14 @@ class AuthenticationCubit extends Cubit<AuthtenticationState> {
   Future<bool?> loginCustom(String mail, String password) async {
     final response = await authenticationService.signinWithCustom(LoginModel(mail, password));
     if (response != null) {
-      emit(LoginComplete(response));
-      
+      emit(state.copyWith(credential: response, userUid: response.user?.uid));
+
+      debugPrint(response.user!.uid);
+      final prefs = await SharedPreferences.getInstance();
+
+      await prefs.setString('userUID', response.user!.uid);
+
+      UserContext().saveAuth(FirebaseAuth.instance);
       return true;
     }
     return null;
@@ -28,7 +37,8 @@ class AuthenticationCubit extends Cubit<AuthtenticationState> {
     final response = await authenticationService.registerCustom(model);
     if (response != null) {
       await _addUserToDatabase(model, response);
-      emit(LoginComplete(response));
+      emit(state.copyWith(userUid: response.user?.uid));
+
       return true;
     }
     return null;
@@ -39,7 +49,8 @@ class AuthenticationCubit extends Cubit<AuthtenticationState> {
   Future<bool?> signInWithGoogle() async {
     final response = await authenticationService.signinGoogleCustom();
     if (response != null) {
-      emit(LoginComplete(response));
+      emit(state.copyWith(credential: response, userUid: response.user?.uid));
+
       return true;
     }
     return null;
@@ -48,7 +59,8 @@ class AuthenticationCubit extends Cubit<AuthtenticationState> {
   Future<bool?> signInWithApple() async {
     final response = await authenticationService.signinAppleCustom();
     if (response != null) {
-      emit(LoginComplete(response));
+      emit(state.copyWith(credential: response, userUid: response.user?.uid));
+
       return true;
     }
     return null;
