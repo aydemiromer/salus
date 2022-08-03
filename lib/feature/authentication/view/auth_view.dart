@@ -1,79 +1,56 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_login/flutter_login.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:salus/product/widget/navbar/navbar_widget.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:kartal/kartal.dart';
+import 'package:salus/core/widget/image/custom_network_image.dart';
+import 'package:salus/feature/authentication/service/auth_service.dart';
+import 'package:salus/product/utils/text/product_text.dart';
 
-const users = {
-  'dribbble@gmail.com': '12345',
-  'hunter@gmail.com': 'hunter',
-};
+import '../../../core/init/socials/provider/login/services/apple_social_login.dart';
+import '../../../core/init/socials/provider/login/services/google_social_login.dart';
+import '../../../core/utility/size/widget_size.dart';
+import '../../../product/widget/card/form_input_card.dart';
+import '../../../product/widget/form/sign_in_form.dart';
+import '../cubit/authentication_cubit.dart';
 
-class AuthView extends StatelessWidget {
-  Duration get loginTime => const Duration(milliseconds: 2250);
-
-  Future<String?> _authUser(LoginData data) {
-    debugPrint('Name: ${data.name}, Password: ${data.password}');
-    return Future.delayed(loginTime).then((_) {
-      if (!users.containsKey(data.name)) {
-        return 'User not exists';
-      }
-      if (users[data.name] != data.password) {
-        return 'Password does not match';
-      }
-      return null;
-    });
-  }
-
-  Future<String?> _signupUser(SignupData data) {
-    debugPrint('Signup Name: ${data.name}, Password: ${data.password}');
-    return Future.delayed(loginTime).then((_) {
-      return null;
-    });
-  }
-
-  Future<String> _recoverPassword(String name) {
-    debugPrint('Name: $name');
-    return Future.delayed(loginTime).then((_) {
-      if (!users.containsKey(name)) {
-        return 'User not exists';
-      }
-      return "";
-    });
-  }
+class LoginView extends StatelessWidget {
+  const LoginView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return FlutterLogin(
-      title: 'SALUS',
-      //logo: const AssetImage('assets/images/ecorp-lightblue.png'),
-      onLogin: _authUser,
-      onSignup: _signupUser,
-      loginProviders: <LoginProvider>[
-        LoginProvider(
-          icon: FontAwesomeIcons.google,
-          callback: () async {
-            debugPrint('start google sign in');
-            await Future.delayed(loginTime);
-            debugPrint('stop google sign in');
-            return null;
-          },
-        ),
-        LoginProvider(
-          icon: FontAwesomeIcons.apple,
-          callback: () async {
-            debugPrint('start github sign in');
-            await Future.delayed(loginTime);
-            debugPrint('stop github sign in');
-            return null;
-          },
-        ),
-      ],
-      onSubmitAnimationCompleted: () {
-        Navigator.of(context).pushReplacement(MaterialPageRoute(
-          builder: (context) => const Navbar(),
-        ));
-      },
-      onRecoverPassword: _recoverPassword,
-    );
+    return BlocProvider(
+        create: (context) {
+          return AuthenticationCubit(AuthenticationService(FirebaseAuth.instance, GoogleLogin(), AppleSocialLogin()));
+        },
+        child: BlocConsumer<AuthenticationCubit, AuthtenticationState>(listener: (context, state) {
+          if (state is LoginComplete) {}
+        }, builder: (context, state) {
+          return Scaffold(
+            backgroundColor: context.colorScheme.primary,
+            body: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                const CustomNetworkImage(
+                    imageUrl: 'https://cobidu.co.uk/shared/images/general/57_mental-health_607219ac4f969.png'),
+                FormInputCard(
+                    margin: EdgeInsets.zero,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        ProductText.headline1("Welcome", context: context),
+                        const SizedBox(height: WidgetSizes.spacingM),
+                        SignInForm(
+                          onSuccses: (email, password) async {
+                            await context.read<AuthenticationCubit>().loginCustom(email, password);
+                          },
+                        ),
+                        context.emptySizedHeightBoxNormal
+                      ],
+                    ))
+              ],
+            ),
+          );
+        }));
   }
 }

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kartal/kartal.dart';
 import 'package:salus/feature/chat/model/chat_model.dart';
-import 'package:salus/feature/chat/model/user_model.dart';
+import 'package:salus/product/model/user/user_model.dart';
 import 'package:salus/feature/chat/service/Ifirebase_service.dart';
 
 import '../../../product/init/language/locale_keys.g.dart';

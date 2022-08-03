@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:salus/feature/chat/model/chat_model.dart';
 import 'package:salus/feature/chat/service/Ifirebase_service.dart';
 import 'dart:core';
-import '../model/user_model.dart';
+import '../../../product/model/user/user_model.dart';
 
 class FireStoreService extends IFirebaseService {
   FireStoreService(FirebaseFirestore firestore) : super(firestore);
