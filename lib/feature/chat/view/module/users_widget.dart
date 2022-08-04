@@ -10,7 +10,7 @@ class MyUserList extends StatelessWidget {
       color: context.colorScheme.background,
       height: context.dynamicHeight(.715),
       child: ListView.builder(
-          itemCount: state.userList?.length ?? 0,
+          itemCount: state.userList!.length - 1,
           itemBuilder: ((context, index) {
             UserModel user = state.userList?[index];
             return ColumnWithSpacing(space: 10, children: [
@@ -24,7 +24,7 @@ class MyUserList extends StatelessWidget {
                               )),
                     );
                   },
-                  child: _userListTile(context, user)),
+                  child: state.userUID == state.userList?[index].userID ? null : _userListTile(context, user)),
               const GrayDivider(),
             ]);
           })),

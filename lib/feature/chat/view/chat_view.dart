@@ -12,6 +12,7 @@ import 'package:salus/product/widget/appBar/app_bar_widget.dart';
 import 'package:kartal/kartal.dart';
 import 'package:salus/product/widget/column/column_with_divider.dart';
 import 'package:salus/product/widget/divider/gray_divider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../product/model/user/user_model.dart';
 import '../service/firebase_service.dart';
@@ -27,7 +28,6 @@ class ChatView extends StatefulWidget {
 
 class _ChatViewState extends State<ChatView> with WidgetsBindingObserver {
   String? status = LocaleKeys.status_online.tr();
-  
 
   @override
   void initState() {
@@ -36,16 +36,19 @@ class _ChatViewState extends State<ChatView> with WidgetsBindingObserver {
   }
 
   @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
+  void didChangeAppLifecycleState(AppLifecycleState state) async {
+    final prefs = await SharedPreferences.getInstance();
+
+    final String? userID = prefs.getString('userUID');
     if (state == AppLifecycleState.resumed) {
       setState(() {
         ChatCubit(FireStoreService(FirebaseFirestore.instance))
-            .changeStatusPerson("oAm1kmK128Wr4iY0gJzXHWDUDlq1", LocaleKeys.status_online.tr());
+            .changeStatusPerson(userID.toString(), LocaleKeys.status_online.tr());
       });
     } else {
       setState(() {
         ChatCubit(FireStoreService(FirebaseFirestore.instance))
-            .changeStatusPerson("oAm1kmK128Wr4iY0gJzXHWDUDlq1", LocaleKeys.status_offline.tr());
+            .changeStatusPerson(userID.toString(), LocaleKeys.status_offline.tr());
       });
     }
   }
@@ -54,8 +57,7 @@ class _ChatViewState extends State<ChatView> with WidgetsBindingObserver {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) {
-        return ChatCubit(FireStoreService(FirebaseFirestore.instance))
-          ..init( LocaleKeys.status_online.tr());
+        return ChatCubit(FireStoreService(FirebaseFirestore.instance))..init(LocaleKeys.status_online.tr());
       },
       child: Scaffold(
         backgroundColor: context.colorScheme.onBackground,
