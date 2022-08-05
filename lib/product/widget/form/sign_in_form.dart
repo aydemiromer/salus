@@ -70,10 +70,7 @@ class _SignInFormState extends State<SignInForm> {
           padding: const PagePadding.all(), shape: RoundedRectangleBorder(borderRadius: context.lowBorderRadius)),
       onPressed: () async {
         if (_formKey.currentState?.validate() ?? false) {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => const Navbar()),
-          );
+         
           await widget.onSuccses(_emailController.text, _passwordController.text);
           
         } else {

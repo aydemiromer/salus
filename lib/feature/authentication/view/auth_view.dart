@@ -38,7 +38,7 @@ class LoginView extends StatelessWidget {
                     const SizedBox(height: WidgetSizes.spacingM),
                     SignInForm(
                       onSuccses: (email, password) async {
-                        await context.read<AuthenticationCubit>().loginCustom(email, password);
+                        await context.read<AuthenticationCubit>().loginCustom(email, password,context);
                       },
                     ),
                     context.emptySizedHeightBoxNormal

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../product/state/user_context.dart';
+import '../../../product/widget/navbar/navbar_widget.dart';
 import '../model/login_model.dart';
 import '../model/register_model.dart';
 import '../service/auth_service.dart';
@@ -17,15 +18,21 @@ class AuthenticationCubit extends Cubit<AuthtenticationState> {
   final IAuthenticationService authenticationService;
   BuildContext? context;
 
-  Future<bool?> loginCustom(String mail, String password) async {
+  Future<bool?> loginCustom(String mail, String password, context) async {
     final response = await authenticationService.signinWithCustom(LoginModel(mail, password));
     if (response != null) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const Navbar()),
+      );
       emit(state.copyWith(credential: response, userUid: response.user?.uid));
 
       debugPrint(response.user!.uid);
       final prefs = await SharedPreferences.getInstance();
 
       await prefs.setString('userUID', response.user!.uid);
+
+      
 
       UserContext().saveAuth(FirebaseAuth.instance);
       return true;
