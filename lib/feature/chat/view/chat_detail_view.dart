@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kartal/kartal.dart';
 import 'package:salus/product/widget/chat/chat_box.dart';
 import 'package:salus/product/widget/divider/gray_divider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../core/utility/padding/page_padding.dart';
 import '../../../product/init/language/locale_keys.g.dart';

@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:salus/feature/chat/model/chat_model.dart';
 import 'package:salus/feature/chat/service/Ifirebase_service.dart';
+import 'package:salus/product/enums/firebase_enums.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:core';
 import '../../../product/model/user/user_model.dart';
 
@@ -12,14 +14,19 @@ class FireStoreService extends IFirebaseService {
     List<UserModel> myUsers = [];
 
     try {
-      QuerySnapshot querySnapshot = await fireStore.collection('users').get();
+      QuerySnapshot querySnapshot = await fireStore.collection(FirebaseEnums.users.name).get();
       for (DocumentSnapshot snap in querySnapshot.docs) {
         Map<String, dynamic> map = snap.data() as Map<String, dynamic>;
         UserModel tekUser = UserModel.fromMap(map);
+        final prefs = await SharedPreferences.getInstance();
 
+        final String? userID = prefs.getString('userUID');
+        tekUser.userID == userID ? prefs.setString('userRole', tekUser.role.toString()) : null;
         myUsers.add(tekUser);
       }
-    } catch (error) {}
+    } catch (error) {
+      return [];
+    }
 
     return myUsers;
   }
@@ -27,18 +34,30 @@ class FireStoreService extends IFirebaseService {
   @override
   Future setStatus(String userID, String status) async {
     try {
-      await fireStore.collection('users').doc(userID).update({"status": status});
-    } catch (error) {}
+      await fireStore.collection(FirebaseEnums.users.name).doc(userID).update({FirebaseEnums.status.name: status});
+    } catch (error) {
+      return null;
+    }
+    return null;
+  }
+
+  @override
+  Future corpAssign(String userID, String corpID) async {
+    try {
+      await fireStore.collection(FirebaseEnums.users.name).doc(userID).update({"corp": corpID});
+    } catch (error) {
+      return null;
+    }
     return null;
   }
 
   @override
   Stream<List<ChatModel>> getChatMessages(String userID, String otherUserID) {
     var snapShot = fireStore
-        .collection('chat')
+        .collection(FirebaseEnums.chat.name)
         .doc("${userID}1to1$otherUserID")
-        .collection('messages')
-        .orderBy('date')
+        .collection(FirebaseEnums.message.name)
+        .orderBy(FirebaseEnums.date.name)
         .limit(1)
         .snapshots();
     return snapShot.map((mesajListesi) => mesajListesi.docs.map((mesaj) => ChatModel.fromMap(mesaj.data())).toList());
@@ -46,24 +65,42 @@ class FireStoreService extends IFirebaseService {
 
   @override
   Future<bool> saveMessage(ChatModel message, String userID) async {
-    var messageId = fireStore.collection('users').doc(userID).collection('chat').doc().id;
+    var messageId =
+        fireStore.collection(FirebaseEnums.users.name).doc(userID).collection(FirebaseEnums.chat.name).doc().id;
     var myDocumentID = "${message.sender}1to1${message.getter}";
     var receiverDocumentID = "${message.getter}1to1${message.sender}";
 
     var savedMessage = message.toMap();
 
-    await fireStore.collection('chat').doc(myDocumentID).collection('messages').doc(messageId).set(savedMessage);
+    await fireStore
+        .collection(FirebaseEnums.chat.name)
+        .doc(myDocumentID)
+        .collection(FirebaseEnums.message.name)
+        .doc(messageId)
+        .set(savedMessage);
 
     savedMessage.update('whoIsThis', (value) => false);
 
-    await fireStore.collection('chat').doc(receiverDocumentID).collection('messages').doc(messageId).set(savedMessage);
+    await fireStore
+        .collection(FirebaseEnums.chat.name)
+        .doc(receiverDocumentID)
+        .collection(FirebaseEnums.message.name)
+        .doc(messageId)
+        .set(savedMessage);
 
-    await fireStore.collection('chat').doc(receiverDocumentID).set({
-      "sender": message.sender,
-      "getter": message.getter,
+    await fireStore.collection(FirebaseEnums.users.name).doc(message.sender).update({
       "message": message.message,
-      "date": FieldValue.serverTimestamp(),
     });
     return true;
+  }
+
+  @override
+  Future<bool> setAssign(String UserID, String assingnText) async {
+    try {
+      await fireStore.collection(FirebaseEnums.users.name).doc(UserID).update({'assignment': assingnText});
+      return true;
+    } catch (e) {
+      return false;
+    }
   }
 }

@@ -21,13 +21,12 @@ class ChatTextField extends StatelessWidget {
                 color: context.colorScheme.surface,
                 onPressed: () async {
                   if (textController!.text.trim().isNotEmpty) {
-                    ChatModel currentMessage = ChatModel(
-                        getter: user.userID,
-                        sender: "NBfK00HIJdQJkswnarTm5OIZwpr2",
-                        whoIsThis: true,
-                        message: textController!.text);
-                    var result =
-                        await context.read<ChatCubit>().saveMessages(currentMessage, "NBfK00HIJdQJkswnarTm5OIZwpr2");
+                    final prefs = await SharedPreferences.getInstance();
+
+                    final String? userID = prefs.getString('userUID');
+                    ChatModel currentMessage =
+                        ChatModel(getter: user.userID, sender: userID, whoIsThis: true, message: textController!.text);
+                    var result = await context.read<ChatCubit>().saveMessages(currentMessage, userID.toString());
 
                     if (result) {
                       textController!.clear();

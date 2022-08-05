@@ -60,7 +60,7 @@ class _ChatViewState extends State<ChatView> with WidgetsBindingObserver {
         return ChatCubit(FireStoreService(FirebaseFirestore.instance))..init(LocaleKeys.status_online.tr());
       },
       child: Scaffold(
-        backgroundColor: context.colorScheme.onBackground,
+        backgroundColor: context.colorScheme.background,
         appBar: _appbar,
         body: _body(context),
       ),
@@ -72,11 +72,6 @@ AppBarWidget get _appbar => AppBarWidget();
 
 Widget _body(BuildContext context) => BlocBuilder<ChatCubit, ChatState>(
       builder: ((context, state) => Column(
-            children: [
-              context.emptySizedHeightBoxLow,
-              const _Tabbar(),
-              context.emptySizedHeightBoxLow,
-              MyUserList(state: state)
-            ],
+            children: [_Tabbar(state: state), context.emptySizedHeightBoxLow, MyUserList(state: state)],
           )),
     );

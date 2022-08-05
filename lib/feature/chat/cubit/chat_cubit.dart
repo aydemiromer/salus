@@ -12,7 +12,7 @@ import '../../../product/init/language/locale_keys.g.dart';
 part 'chat_state.dart';
 
 class ChatCubit extends Cubit<ChatState> {
-  ChatCubit(this.firebaseService) : super(const ChatState());
+  ChatCubit(this.firebaseService) : super(ChatState());
   final IFirebaseService firebaseService;
 
   Future<void> init(String status) async {
@@ -20,21 +20,40 @@ class ChatCubit extends Cubit<ChatState> {
     final prefs = await SharedPreferences.getInstance();
 
     final String? userID = prefs.getString('userUID');
-    emit(state.copyWith(userUID: userID));
+    final String? userRole = prefs.getString('userRole');
+
+    emit(state.copyWith(userUID: userID, userRole: userRole));
 
     changeStatusPerson(userID ?? '', status);
+  }
+
+  void changeCategory() {
+    if (state.category == "user") {
+      emit(state.copyWith(category: "corp"));
+    } else {
+      emit(state.copyWith(category: "user"));
+    }
+  }
+
+  Future assignCorp(String userID, String corpID) async {
+    final res = await firebaseService.corpAssign(userID, corpID);
+    
   }
 
   void userUid() async {
     final prefs = await SharedPreferences.getInstance();
 
     final String? userID = prefs.getString('userUID');
-    emit(state.copyWith(userUID: userID));
+    final String? userRole = prefs.getString('userRole');
+
+    emit(state.copyWith(userUID: userID, userRole: userRole));
   }
 
   Future<List<UserModel>> getUsersFromFirebase() async {
-    final response = await firebaseService.userList();
+    var response = await firebaseService.userList();
+
     emit(state.copyWith(userList: response));
+
     return response;
   }
 

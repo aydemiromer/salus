@@ -12,7 +12,11 @@ abstract class IFirebaseService {
 
   Future setStatus(String userID, String status);
 
+  Future<bool> setAssign(String UserID, String assingnText);
+
   Stream<List<ChatModel>> getChatMessages(String userID, String otherUserID);
 
   Future<bool> saveMessage(ChatModel message, String userID);
+
+  Future corpAssign(String userID, String corpID);
 }
