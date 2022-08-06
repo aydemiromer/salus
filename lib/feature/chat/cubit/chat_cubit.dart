@@ -16,6 +16,7 @@ class ChatCubit extends Cubit<ChatState> {
   final IFirebaseService firebaseService;
 
   Future<void> init(String status) async {
+    emit(state.copyWith(isLoading: true));
     getUsersFromFirebase();
     final prefs = await SharedPreferences.getInstance();
 
@@ -23,7 +24,7 @@ class ChatCubit extends Cubit<ChatState> {
     final String? userRole = prefs.getString('userRole');
     final String? userCorp = prefs.getString('WhoCorp');
 
-    emit(state.copyWith(userUID: userID, userRole: userRole, userCorpAssign: userCorp));
+    emit(state.copyWith(userUID: userID, userRole: userRole, userCorpAssign: userCorp, isLoading: false));
 
     changeStatusPerson(userID ?? '', status);
     tokenForNotification(userID.toString());
@@ -56,9 +57,10 @@ class ChatCubit extends Cubit<ChatState> {
   }
 
   Future<List<UserModel>> getUsersFromFirebase() async {
+    emit(state.copyWith(isLoading: true));
     var response = await firebaseService.userList();
 
-    emit(state.copyWith(userList: response));
+    emit(state.copyWith(userList: response, isLoading: false));
 
     return response;
   }

@@ -7,7 +7,16 @@ class ChatState extends Equatable {
   final String? userRole;
   final String? userCorpAssign;
   String? category = "user";
-  ChatState({this.userList, this.messageList, this.userUID, this.category, this.userRole, this.userCorpAssign});
+  final bool isLoading;
+
+  ChatState(
+      {this.isLoading = false,
+      this.userList,
+      this.messageList,
+      this.userUID,
+      this.category,
+      this.userRole,
+      this.userCorpAssign});
 
   Color colorCondition(BuildContext context, String status) => status == LocaleKeys.assignment_appoinment.tr()
       ? context.colorScheme.outline
@@ -24,14 +33,15 @@ class ChatState extends Equatable {
       String? userUID,
       String? category = "user",
       String? userRole,
-      String? userCorpAssign}) {
+      String? userCorpAssign,
+      bool? isLoading}) {
     return ChatState(
-      userList: userList ?? this.userList,
-      messageList: messageList ?? this.messageList,
-      userUID: userUID ?? this.userUID,
-      category: category ?? this.category,
-      userRole: userRole ?? this.userRole,
-      userCorpAssign: userCorpAssign ?? this.userCorpAssign,
-    );
+        userList: userList ?? this.userList,
+        messageList: messageList ?? this.messageList,
+        userUID: userUID ?? this.userUID,
+        category: category ?? this.category,
+        userRole: userRole ?? this.userRole,
+        userCorpAssign: userCorpAssign ?? this.userCorpAssign,
+        isLoading: isLoading ?? this.isLoading);
   }
 }

@@ -71,13 +71,18 @@ class _ChatViewState extends State<ChatView> with WidgetsBindingObserver {
 
 AppBarWidget get _appbar => AppBarWidget();
 
-Widget _body(BuildContext context) => BlocBuilder<ChatCubit, ChatState>(
-      builder: ((context, state) => 
-      Column(
-            children: [
-              _Tabbar(state: state),
-              context.emptySizedHeightBoxLow,
-              MyUserList(state: state),
-            ],
-          )),
-    );
+Widget _body(BuildContext context) => BlocBuilder<ChatCubit, ChatState>(builder: (context, state) {
+      return Column(
+        children: [
+          _Tabbar(state: state),
+          context.emptySizedHeightBoxLow,
+          state.isLoading == true
+              ? Center(
+                  child: CircularProgressIndicator(
+                    color: context.colorScheme.primary,
+                  ),
+                )
+              : MyUserList(state: state),
+        ],
+      );
+    });
