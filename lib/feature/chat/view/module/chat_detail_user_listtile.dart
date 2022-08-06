@@ -48,14 +48,19 @@ class _DetailListTile extends StatelessWidget {
 
 SizedBox _assignmentStatusCard(BuildContext context, UserModel user, ChatState state) {
   return SizedBox(
-    child: Card(
-      color: state.colorCondition(context, user.assignment.toString()),
-      child: Padding(
-        padding: const PagePadding.allLow(),
-        child: ProductText(
-          user.assignment.toString(),
-        ).color(context.colorScheme.onSurface),
+    child: InkWell(
+      onTap: (){},
+      child: Card(
+        color: state.colorCondition(context, user.assignment.toString()),
+        child: Padding(
+          padding: const PagePadding.allLow(),
+          child: ProductText(
+            user.assignment.toString(),
+          ).color(context.colorScheme.onSurface),
+        ),
       ),
     ),
   );
 }
+
+

@@ -5,8 +5,9 @@ class ChatState extends Equatable {
   final Stream<List<ChatModel>>? messageList;
   final String? userUID;
   final String? userRole;
+  final String? userCorpAssign;
   String? category = "user";
-  ChatState({this.userList, this.messageList, this.userUID, this.category, this.userRole});
+  ChatState({this.userList, this.messageList, this.userUID, this.category, this.userRole, this.userCorpAssign});
 
   Color colorCondition(BuildContext context, String status) => status == LocaleKeys.assignment_appoinment.tr()
       ? context.colorScheme.outline
@@ -22,12 +23,15 @@ class ChatState extends Equatable {
       Stream<List<ChatModel>>? messageList,
       String? userUID,
       String? category = "user",
-      String? userRole}) {
+      String? userRole,
+      String? userCorpAssign}) {
     return ChatState(
-        userList: userList ?? this.userList,
-        messageList: messageList ?? this.messageList,
-        userUID: userUID ?? this.userUID,
-        category: category ?? this.category,
-        userRole: userRole ?? this.userRole);
+      userList: userList ?? this.userList,
+      messageList: messageList ?? this.messageList,
+      userUID: userUID ?? this.userUID,
+      category: category ?? this.category,
+      userRole: userRole ?? this.userRole,
+      userCorpAssign: userCorpAssign ?? this.userCorpAssign,
+    );
   }
 }

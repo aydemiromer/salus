@@ -15,6 +15,7 @@ import 'package:salus/product/widget/divider/gray_divider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../product/model/user/user_model.dart';
+import '../service/Ifirebase_service.dart';
 import '../service/firebase_service.dart';
 part 'module/tabbar_widget.dart';
 part 'module/users_widget.dart';
@@ -71,7 +72,12 @@ class _ChatViewState extends State<ChatView> with WidgetsBindingObserver {
 AppBarWidget get _appbar => AppBarWidget();
 
 Widget _body(BuildContext context) => BlocBuilder<ChatCubit, ChatState>(
-      builder: ((context, state) => Column(
-            children: [_Tabbar(state: state), context.emptySizedHeightBoxLow, MyUserList(state: state)],
+      builder: ((context, state) => 
+      Column(
+            children: [
+              _Tabbar(state: state),
+              context.emptySizedHeightBoxLow,
+              MyUserList(state: state),
+            ],
           )),
     );

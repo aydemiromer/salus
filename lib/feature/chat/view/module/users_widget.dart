@@ -11,45 +11,18 @@ class MyUserList extends StatelessWidget {
       color: context.colorScheme.background,
       height: context.dynamicHeight(.615),
       child: ListView.builder(
-          itemCount: state.userList!.length - 1,
-          itemBuilder: ((context, index) {
+          itemCount: state.userList?.length,
+          itemBuilder: ((BuildContext context, index) {
             UserModel user = state.userList?[index];
 
             state.userList?[index].role.toString() == "corp" ? corp.add(state.userList?[index]) : null;
-            debugPrint(corp.toString());
-            debugPrint(corp.length.toString());
+
             return ColumnWithSpacing(space: 5, children: [
               InkWell(
-                  onLongPress: () {
-                    showModalBottomSheet(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return Container(
-                            color: context.colorScheme.background,
-                            height: context.dynamicHeight(.5),
-                            child: ListView.builder(
-                              itemCount: corp.length,
-                              itemBuilder: ((context, index) {
-                                return CustomElevatedButton(
-                                  color: context.colorScheme.primary,
-                                  height: context.dynamicHeight(.08),
-                                  onPressed: () {
-                                    context
-                                        .read<ChatCubit>()
-                                        .assignCorp(state.userList?[index].userID, corp[index].userID.toString());
-
-                                    
-                                  },
-                                  child: Text(
-                                    "${corp[index].name}  ${corp[index].surname}",
-                                  ),
-                                );
-                              }),
-                            ),
-                          );
-                        });
+                  onDoubleTap: () {
+                    _showModal(context, corp, user.userID);
                   },
-                  onTap: () {
+                  onTap: () async {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -62,7 +35,10 @@ class MyUserList extends StatelessWidget {
                       ? (state.userUID == state.userList?[index].userID || state.userList?[index].role == "corp")
                           ? const SizedBox()
                           : _userListTile(context, user)
-                      : (state.userUID == state.userList?[index].userID || state.userList?[index].role == "personal")
+                      : (state.userUID == state.userList?[index].userID || state.userList?[index].role == "personal") ||
+                              (state.userList?[index].role == "corp"
+                                  ? (state.userList?[index].userID != state.userCorpAssign)
+                                  : false)
                           ? const SizedBox()
                           : _userListTile(context, user)),
             ]);
@@ -133,4 +109,57 @@ class MyUserList extends StatelessWidget {
       ),
     );
   }
+}
+
+_showModal(BuildContext context, corp, state) {
+  return showModalBottomSheet(
+      context: context,
+      builder: (context) {
+        return Container(
+          color: context.colorScheme.background,
+          height: context.dynamicHeight(.4),
+          child: Column(
+            children: [
+              context.emptySizedHeightBoxLow3x,
+              ProductText.headline3(
+                "Terapistler",
+                context: context,
+                color: context.colorScheme.primary,
+              ),
+              context.emptySizedHeightBoxLow3x,
+              SizedBox(
+                height: context.dynamicHeight(.3),
+                width: context.dynamicWidth(.9),
+                child: ListView.builder(
+                  itemCount: corp.length,
+                  itemBuilder: ((context, index) {
+                    return CustomElevatedButton(
+                      color: context.colorScheme.primary,
+                      height: context.dynamicHeight(.08),
+                      width: context.dynamicWidth(.9),
+                      borderRadius: 20,
+                      onPressed: () async {
+                        IFirebaseService? firebaseService = FireStoreService(FirebaseFirestore.instance);
+
+                        debugPrint(state.toString());
+                        debugPrint(corp[index].userID.toString());
+                        await firebaseService.corpAssign(state.toString(), corp[index].userID.toString());
+                        await firebaseService.setAssign(state.toString(), "Terapist Atandı");
+                        /*await context
+                            .watch<ChatCubit>()
+                            .assignCorp(state.userList?[index].userID, corp[index].userID.toString());*/
+                      },
+                      child: ProductText.headline3(
+                        "${corp[index].name}  ${corp[index].surname}",
+                        context: context,
+                        color: context.colorScheme.background,
+                      ),
+                    );
+                  }),
+                ),
+              ),
+            ],
+          ),
+        );
+      });
 }

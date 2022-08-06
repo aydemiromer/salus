@@ -22,6 +22,7 @@ class FireStoreService extends IFirebaseService {
 
         final String? userID = prefs.getString('userUID');
         tekUser.userID == userID ? prefs.setString('userRole', tekUser.role.toString()) : null;
+        tekUser.userID == userID ? prefs.setString('WhoCorp', tekUser.corp.toString()) : null;
         myUsers.add(tekUser);
       }
     } catch (error) {
@@ -29,6 +30,12 @@ class FireStoreService extends IFirebaseService {
     }
 
     return myUsers;
+  }
+
+  Future getUserInformations(String userID) async {
+    try {
+      await fireStore.collection(FirebaseEnums.users.name).doc(userID).get();
+    } catch (e) {}
   }
 
   @override
@@ -43,9 +50,12 @@ class FireStoreService extends IFirebaseService {
 
   @override
   Future corpAssign(String userID, String corpID) async {
+    print("başladı");
     try {
+      print("girdi");
       await fireStore.collection(FirebaseEnums.users.name).doc(userID).update({"corp": corpID});
     } catch (error) {
+      print("hjata");
       return null;
     }
     return null;
@@ -95,9 +105,9 @@ class FireStoreService extends IFirebaseService {
   }
 
   @override
-  Future<bool> setAssign(String UserID, String assingnText) async {
+  Future<bool> setAssign(String userID, String assingnText) async {
     try {
-      await fireStore.collection(FirebaseEnums.users.name).doc(UserID).update({'assignment': assingnText});
+      await fireStore.collection(FirebaseEnums.users.name).doc(userID).update({'assignment': assingnText});
       return true;
     } catch (e) {
       return false;

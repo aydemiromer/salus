@@ -21,8 +21,9 @@ class ChatCubit extends Cubit<ChatState> {
 
     final String? userID = prefs.getString('userUID');
     final String? userRole = prefs.getString('userRole');
+     final String? userCorp = prefs.getString('WhoCorp');
 
-    emit(state.copyWith(userUID: userID, userRole: userRole));
+    emit(state.copyWith(userUID: userID, userRole: userRole, userCorpAssign: userCorp));
 
     changeStatusPerson(userID ?? '', status);
   }
@@ -36,8 +37,8 @@ class ChatCubit extends Cubit<ChatState> {
   }
 
   Future assignCorp(String userID, String corpID) async {
-    final res = await firebaseService.corpAssign(userID, corpID);
-    
+    await firebaseService.corpAssign(userID, corpID);
+    await firebaseService.setAssign(userID, "Terapist Atandı");
   }
 
   void userUid() async {

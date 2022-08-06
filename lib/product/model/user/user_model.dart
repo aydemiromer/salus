@@ -13,9 +13,18 @@ class UserModel with EquatableMixin {
   final String? deviceToken;
   final String? message;
   final String? role;
+  final String? corp;
 
   UserModel(
-      {this.userID, this.name, this.surname, this.status, this.assignment, this.deviceToken, this.message, this.role});
+      {this.userID,
+      this.name,
+      this.surname,
+      this.status,
+      this.assignment,
+      this.deviceToken,
+      this.message,
+      this.role,
+      this.corp});
 
   @override
   UserModel fromJson(Map<String, dynamic> json) {
@@ -25,6 +34,7 @@ class UserModel with EquatableMixin {
   @override
   UserModel.fromMap(Map<String, dynamic> map)
       : userID = map['userID'],
+        corp = map['corp'],
         name = map['name'],
         surname = map['surname'],
         status = map['status'],
@@ -37,6 +47,7 @@ class UserModel with EquatableMixin {
   Map<String, dynamic> toMap() {
     return {
       'userID': userID,
+      'corp': corp,
       'name': name,
       'surname': surname,
       'status': status,
