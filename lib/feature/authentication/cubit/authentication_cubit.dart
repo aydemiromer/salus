@@ -31,9 +31,6 @@ class AuthenticationCubit extends Cubit<AuthtenticationState> {
       final prefs = await SharedPreferences.getInstance();
 
       await prefs.setString('userUID', response.user!.uid);
-
-      
-
       UserContext().saveAuth(FirebaseAuth.instance);
       return true;
     }

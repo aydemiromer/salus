@@ -1,12 +1,8 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:salus/product/model/user/user_model.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../core/init/socials/provider/login/services/apple_social_login.dart';
 import '../../../../core/init/socials/provider/login/services/google_social_login.dart';
 import '../../../../product/mixin/error_mixin.dart';
-import '../../../product/enums/firebase_enums.dart';
 import '../model/login_model.dart';
 import '../model/register_model.dart';
 
