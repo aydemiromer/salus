@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kartal/kartal.dart';
@@ -50,31 +49,35 @@ class _ChatDetailViewState extends State<ChatDetailView> {
   Widget build(BuildContext context) {
     return BlocProvider(
         create: (context) {
-          return ChatCubit(FireStoreService(FirebaseFirestore.instance))..init(LocaleKeys.status_online.tr());
+          return ChatCubit(
+            FireStoreService(FirebaseFirestore.instance),
+          )..init(LocaleKeys.status_online.tr());
         },
-        child: Scaffold(
-          backgroundColor: context.colorScheme.onBackground,
-          appBar: _appbar,
-          body: _body(context, widget.model, _textController),
-        ));
+        child: BlocBuilder<ChatCubit, ChatState>(
+            builder: ((context, state) => Scaffold(
+                  backgroundColor: context.colorScheme.onBackground,
+                  appBar: _appbar(state),
+                  body: _body(context, widget.model, _textController, state),
+                ))));
   }
 }
 
-AppBarWidget get _appbar => AppBarWidget();
+AppBarWidget _appbar(state) => AppBarWidget(
+      state: state,
+    );
 
-Widget _body(BuildContext context, UserModel user, textController) => BlocBuilder<ChatCubit, ChatState>(
-    builder: ((context, state) => Column(
-          children: [
-            _DetailListTile(user: user, state: state),
-            const GrayDivider(),
-            _streamMessages(context, user, state),
-            ChatTextField(
-              user: user,
-              textController: textController,
-              state: state,
-            )
-          ],
-        )));
+Widget _body(BuildContext context, UserModel user, textController, ChatState state) => Column(
+      children: [
+        _DetailListTile(user: user, state: state),
+        const GrayDivider(),
+        _streamMessages(context, user, state),
+        ChatTextField(
+          user: user,
+          textController: textController,
+          state: state,
+        )
+      ],
+    );
 
 Expanded _streamMessages(BuildContext context, UserModel user, ChatState state) {
   return Expanded(

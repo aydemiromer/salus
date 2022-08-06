@@ -43,46 +43,49 @@ class _ChatViewState extends State<ChatView> with WidgetsBindingObserver {
     final String? userID = prefs.getString('userUID');
     if (state == AppLifecycleState.resumed) {
       setState(() {
-        ChatCubit(FireStoreService(FirebaseFirestore.instance))
-            .changeStatusPerson(userID.toString(), LocaleKeys.status_online.tr());
+        ChatCubit(
+          FireStoreService(FirebaseFirestore.instance),
+        ).changeStatusPerson(userID.toString(), LocaleKeys.status_online.tr());
       });
     } else {
       setState(() {
-        ChatCubit(FireStoreService(FirebaseFirestore.instance))
-            .changeStatusPerson(userID.toString(), LocaleKeys.status_offline.tr());
+        ChatCubit(
+          FireStoreService(FirebaseFirestore.instance),
+        ).changeStatusPerson(userID.toString(), LocaleKeys.status_offline.tr());
       });
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) {
-        return ChatCubit(FireStoreService(FirebaseFirestore.instance))..init(LocaleKeys.status_online.tr());
-      },
-      child: Scaffold(
+    return BlocProvider(create: (context) {
+      return ChatCubit(
+        FireStoreService(FirebaseFirestore.instance),
+      )..init(LocaleKeys.status_online.tr());
+    }, child: BlocBuilder<ChatCubit, ChatState>(builder: (context, state) {
+      return Scaffold(
         backgroundColor: context.colorScheme.background,
-        appBar: _appbar,
-        body: _body(context),
-      ),
-    );
+        appBar: _appbar(state),
+        body: _body(context, state),
+      );
+    }));
   }
 }
 
-AppBarWidget get _appbar => AppBarWidget();
+AppBarWidget _appbar(state) => AppBarWidget(
+      state: state,
+    );
 
-Widget _body(BuildContext context) => BlocBuilder<ChatCubit, ChatState>(builder: (context, state) {
-      return Column(
-        children: [
-          _Tabbar(state: state),
-          context.emptySizedHeightBoxLow,
-          state.isLoading == true
-              ? Center(
-                  child: CircularProgressIndicator(
-                    color: context.colorScheme.primary,
-                  ),
-                )
-              : MyUserList(state: state),
-        ],
-      );
-    });
+Widget _body(BuildContext context, ChatState state) => Column(
+      children: [
+        _Tabbar(state: state),
+        context.emptySizedHeightBoxLow,
+        state.isLoading == true
+            ? Center(
+                child: CircularProgressIndicator(
+                  color: context.colorScheme.primary,
+                ),
+              )
+            : MyUserList(state: state),
+      ],
+    );

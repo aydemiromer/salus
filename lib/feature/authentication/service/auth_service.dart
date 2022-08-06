@@ -21,6 +21,7 @@ abstract class IAuthenticationService {
   Future<UserCredential?> registerCustom(RegisterModel model);
   Future<UserCredential?> signinGoogleCustom();
   Future<UserCredential?> signinAppleCustom();
+  Future<void> signOut();
 }
 
 class AuthenticationService extends IAuthenticationService with ErrorMixin {
@@ -31,15 +32,13 @@ class AuthenticationService extends IAuthenticationService with ErrorMixin {
   Future<UserCredential?> signinWithCustom(LoginModel model) async {
     try {
       final response = await firebaseAuth.signInWithEmailAndPassword(email: model.email, password: model.password);
-     
+
       return response;
     } catch (error) {
       showError(error);
       return null;
     }
   }
-
- 
 
   @override
   Future<UserCredential?> registerCustom(RegisterModel model) async {
@@ -77,5 +76,11 @@ class AuthenticationService extends IAuthenticationService with ErrorMixin {
       showError(error);
       return null;
     }
+  }
+
+  @override
+  Future<void> signOut() async {
+    await firebaseAuth.signOut();
+    
   }
 }
