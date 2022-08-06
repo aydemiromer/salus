@@ -39,13 +39,9 @@ class ProjectInitialize implements IProjectInitialize {
       provisional: false,
       sound: true,
     );
-    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-      print(message);
-    });
+    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {});
     FirebaseMessaging.onMessage.listen((event) {});
-    FirebaseMessaging.instance.getInitialMessage().then((message) {
-      print(message);
-    });
+    FirebaseMessaging.instance.getInitialMessage().then((message) {});
   }
 
   @override
