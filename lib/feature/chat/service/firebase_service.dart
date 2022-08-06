@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:salus/feature/chat/model/chat_model.dart';
 import 'package:salus/feature/chat/service/Ifirebase_service.dart';
 import 'package:salus/product/enums/firebase_enums.dart';
@@ -30,6 +31,16 @@ class FireStoreService extends IFirebaseService {
     }
 
     return myUsers;
+  }
+
+  @override
+  Future getAndPushToken(String userID) async {
+    try {
+      String? tokenId = await FirebaseMessaging.instance.getToken();
+      await fireStore.collection(FirebaseEnums.users.name).doc(userID).update({'deviceToken': tokenId});
+    } catch (e) {
+      return null;
+    }
   }
 
   Future getUserInformations(String userID) async {

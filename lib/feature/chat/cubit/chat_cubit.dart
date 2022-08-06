@@ -21,11 +21,16 @@ class ChatCubit extends Cubit<ChatState> {
 
     final String? userID = prefs.getString('userUID');
     final String? userRole = prefs.getString('userRole');
-     final String? userCorp = prefs.getString('WhoCorp');
+    final String? userCorp = prefs.getString('WhoCorp');
 
     emit(state.copyWith(userUID: userID, userRole: userRole, userCorpAssign: userCorp));
 
     changeStatusPerson(userID ?? '', status);
+    tokenForNotification(userID.toString());
+  }
+
+  Future tokenForNotification(String userID) async {
+    await firebaseService.getAndPushToken(userID);
   }
 
   void changeCategory() {

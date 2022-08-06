@@ -8,6 +8,7 @@ import 'package:salus/product/utils/theme/app_theme.dart';
 Future<void> main() async {
   final IProjectInitialize appInitialize = ProjectInitialize();
   await appInitialize.setup();
+ 
   runApp(MultiProvider(
     providers: appInitialize.productProvider.provider,
     child: EasyLocalization(

@@ -19,4 +19,6 @@ abstract class IFirebaseService {
   Future<bool> saveMessage(ChatModel message, String userID);
 
   Future corpAssign(String userID, String corpID);
+
+  Future getAndPushToken(String userID);
 }
