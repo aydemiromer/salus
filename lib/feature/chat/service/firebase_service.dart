@@ -35,7 +35,9 @@ class FireStoreService extends IFirebaseService {
   Future getUserInformations(String userID) async {
     try {
       await fireStore.collection(FirebaseEnums.users.name).doc(userID).get();
-    } catch (e) {}
+    } catch (e) {
+      return null;
+    }
   }
 
   @override
@@ -50,12 +52,9 @@ class FireStoreService extends IFirebaseService {
 
   @override
   Future corpAssign(String userID, String corpID) async {
-    print("başladı");
     try {
-      print("girdi");
       await fireStore.collection(FirebaseEnums.users.name).doc(userID).update({"corp": corpID});
     } catch (error) {
-      print("hjata");
       return null;
     }
     return null;
