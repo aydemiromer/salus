@@ -1,15 +1,17 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kartal/kartal.dart';
+import 'package:salus/product/service/notification.dart';
 import 'package:salus/product/widget/chat/chat_box.dart';
 import 'package:salus/product/widget/divider/gray_divider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../core/utility/padding/page_padding.dart';
-import '../../../core/widget/button/custom_elevated_button.dart';
 import '../../../product/init/language/locale_keys.g.dart';
+import '../../../product/service/Inotification.dart';
 import '../../../product/utils/text/product_text.dart';
 import '../../../product/widget/appBar/app_bar_widget.dart';
 import '../cubit/chat_cubit.dart';
@@ -69,6 +71,7 @@ Widget _body(BuildContext context, UserModel user, textController) => BlocBuilde
             ChatTextField(
               user: user,
               textController: textController,
+              state: state,
             )
           ],
         )));
