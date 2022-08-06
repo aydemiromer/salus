@@ -13,34 +13,34 @@ class MyUserList extends StatelessWidget {
       child: ListView.builder(
           itemCount: state.userList?.length,
           itemBuilder: ((BuildContext context, index) {
-            UserModel user = state.userList?[index];
+            UserModel? user = state.userList?[index];
 
             state.userList?[index].role.toString() == "corp" ? corp.add(state.userList?[index]) : null;
 
             return ColumnWithSpacing(space: 5, children: [
               InkWell(
                   onDoubleTap: () {
-                    _showModal(context, corp, user.userID);
+                    _showModal(context, corp, user?.userID);
                   },
                   onTap: () async {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
                           builder: (context) => ChatDetailView(
-                                model: user,
+                                model: user!,
                               )),
                     );
                   },
                   child: state.userRole != "personal" && state.category == 'user'
                       ? (state.userUID == state.userList?[index].userID || state.userList?[index].role == "corp")
                           ? const SizedBox()
-                          : _userListTile(context, user)
+                          : _userListTile(context, user!)
                       : (state.userUID == state.userList?[index].userID || state.userList?[index].role == "personal") ||
                               (state.userList?[index].role == "corp"
                                   ? (state.userList?[index].userID != state.userCorpAssign)
                                   : false)
                           ? const SizedBox()
-                          : _userListTile(context, user)),
+                          : _userListTile(context, user!)),
             ]);
           })),
     );
