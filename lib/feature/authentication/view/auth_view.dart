@@ -23,28 +23,35 @@ class LoginView extends StatelessWidget {
     }, child: BlocBuilder<AuthenticationCubit, AuthtenticationState>(builder: (context, state) {
       return Scaffold(
         backgroundColor: context.colorScheme.primary,
-        body: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            const CustomNetworkImage(
-                imageUrl: 'https://cobidu.co.uk/shared/images/general/57_mental-health_607219ac4f969.png'),
-            FormInputCard(
-                margin: EdgeInsets.zero,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    ProductText.headline1("Welcome", context: context),
-                    const SizedBox(height: WidgetSizes.spacingM),
-                    SignInForm(
-                      onSuccses: (email, password) async {
-                        await context.read<AuthenticationCubit>().loginCustom(email, password,context);
-                      },
-                    ),
-                    context.emptySizedHeightBoxNormal
-                  ],
-                ))
-          ],
+        body: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              context.emptySizedHeightBoxNormal,
+              context.emptySizedHeightBoxNormal,
+              context.emptySizedHeightBoxNormal,
+              const CustomNetworkImage(
+                  imageUrl: 'https://cobidu.co.uk/shared/images/general/57_mental-health_607219ac4f969.png'),
+              context.emptySizedHeightBoxNormal,
+              context.emptySizedHeightBoxNormal,
+              FormInputCard(
+                  margin: EdgeInsets.zero,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      ProductText.headline1("Welcome", context: context),
+                      const SizedBox(height: WidgetSizes.spacingM),
+                      SignInForm(
+                        onSuccses: (email, password) async {
+                          await context.read<AuthenticationCubit>().loginCustom(email, password, context);
+                        },
+                      ),
+                      context.emptySizedHeightBoxNormal
+                    ],
+                  )),
+            ],
+          ),
         ),
       );
     }));
