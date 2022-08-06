@@ -30,6 +30,22 @@ class ProjectInitialize implements IProjectInitialize {
       badge: true,
       sound: true,
     );
+    await FirebaseMessaging.instance.requestPermission(
+      alert: true,
+      announcement: false,
+      badge: true,
+      carPlay: false,
+      criticalAlert: false,
+      provisional: false,
+      sound: true,
+    );
+    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+      print(message);
+    });
+    FirebaseMessaging.onMessage.listen((event) {});
+    FirebaseMessaging.instance.getInitialMessage().then((message) {
+      print(message);
+    });
   }
 
   @override
