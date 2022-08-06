@@ -16,12 +16,12 @@ class AppBarWidget extends StatelessWidget with PreferredSizeWidget {
       actions: [
         IconButton(
           onPressed: () {},
-          color: context.colorScheme.primary,
+          color: context.colorScheme.onSurface,
           icon: const Icon(Icons.person_outline),
         ),
         IconButton(
           onPressed: () {},
-          color: context.colorScheme.primary,
+          color: context.colorScheme.onSurface,
           icon: const Icon(Icons.notification_add),
         ),
       ],
