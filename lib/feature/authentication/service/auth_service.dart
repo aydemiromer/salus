@@ -17,6 +17,8 @@ abstract class IAuthenticationService {
     this.googleLogin,
   );
 
+  User? currentUser;
+  Stream<User?>? authStateChanges();
   Future<UserCredential?> signinWithCustom(LoginModel model);
   Future<UserCredential?> registerCustom(RegisterModel model);
   Future<UserCredential?> signinGoogleCustom();
@@ -27,6 +29,9 @@ abstract class IAuthenticationService {
 class AuthenticationService extends IAuthenticationService with ErrorMixin {
   AuthenticationService(FirebaseAuth firebaseAuth, GoogleLogin googleLogin, AppleSocialLogin appleSocialLogin)
       : super(firebaseAuth, appleSocialLogin, googleLogin);
+
+  @override
+  Stream<User?>? authStateChanges() => firebaseAuth.authStateChanges();
 
   @override
   Future<UserCredential?> signinWithCustom(LoginModel model) async {
@@ -81,6 +86,8 @@ class AuthenticationService extends IAuthenticationService with ErrorMixin {
   @override
   Future<void> signOut() async {
     await firebaseAuth.signOut();
-    
   }
+  
+  @override
+  User? get currentUser => firebaseAuth.currentUser;
 }

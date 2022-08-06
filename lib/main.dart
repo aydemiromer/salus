@@ -1,14 +1,14 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:salus/feature/authentication/view/auth_view.dart';
+import 'package:salus/feature/landing/landing_page.dart';
 import 'package:salus/product/initialize/project_initialize.dart';
 import 'package:salus/product/utils/theme/app_theme.dart';
 
 Future<void> main() async {
   final IProjectInitialize appInitialize = ProjectInitialize();
   await appInitialize.setup();
- 
+
   runApp(MultiProvider(
     providers: appInitialize.productProvider.provider,
     child: EasyLocalization(
@@ -30,6 +30,6 @@ class MyApp extends StatelessWidget {
         supportedLocales: context.supportedLocales,
         locale: context.locale,
         theme: ThemeManager.createTheme(AppThemeLight()),
-        home: const LoginView());
+        home: LandingPage());
   }
 }
