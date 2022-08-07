@@ -60,4 +60,23 @@ $ flutter pub get
 ..
 ```
 
+Technologies used in practice
+
+- For database => Firebase
+- For State Management => Bloc and Provider
+- For CD process => Fastlane
+
+Features available in the app 
+
+- Login and Register 
+- User Views
+- Notification System(Have some bugs)
+- Profile Page Edit
+- Chat 
+- Assign Page user to corp
+- User status badges
+- Fastlane update to App Store
+
+
+
 
