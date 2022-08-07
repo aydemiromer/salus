@@ -5,9 +5,11 @@ import '../../../core/utility/padding/page_padding.dart';
 import '../../../feature/chat/model/chat_model.dart';
 import '../../utils/text/product_text.dart';
 
+// ignore: must_be_immutable
 class ChatBox extends StatelessWidget {
-  ChatBox({Key? key, required this.model, required this.axisType}) : super(key: key);
+  ChatBox({Key? key, required this.model, required this.axisType, required this.date}) : super(key: key);
   final ChatModel? model;
+  String date;
   CrossAxisAlignment axisType;
   @override
   Widget build(BuildContext context) {
@@ -20,16 +22,30 @@ class ChatBox extends StatelessWidget {
     );
   }
 
-  Container _messagesContainer(BuildContext context) {
-    return Container(
-      width: context.dynamicWidth(.6),
-      padding: const PagePadding.allLow(),
-      decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: context.colorScheme.onTertiary),
-      child: ProductText.normalGreyWithBoldOption(
-        model?.message.toString() ?? '',
-        context: context,
-        fontWeight: FontWeight.w300,
-      ),
+  Column _messagesContainer(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.end,
+      children: [
+        Container(
+          width: context.dynamicWidth(.6),
+          padding: const PagePadding.allLow(),
+          decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: context.colorScheme.onTertiary),
+          child: Column(
+            children: [
+              ProductText.normalGreyWithBoldOption(
+                model?.message.toString() ?? '',
+                context: context,
+                fontWeight: FontWeight.w300,
+              ),
+            ],
+          ),
+        ),
+        ProductText.normalGreyWithBoldOption(
+          date.toString(),
+          context: context,
+          fontWeight: FontWeight.w300,
+        ),
+      ],
     );
   }
 }
