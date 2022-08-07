@@ -59,7 +59,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyDQBg2EcJaug4MPDCDoLLSYBGdJziOVa58',
-    appId: '1:985016749874:ios:d5e885d1ae0d679ec0d12b',
+    appId: '1:985016749874:ios:c430f4c7abfd344bc0d12b',
     messagingSenderId: '985016749874',
     projectId: 'salus-7a691',
     storageBucket: 'salus-7a691.appspot.com',

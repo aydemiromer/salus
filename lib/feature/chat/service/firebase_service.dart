@@ -78,7 +78,7 @@ class FireStoreService extends IFirebaseService {
         .doc("${userID}1to1$otherUserID")
         .collection(FirebaseEnums.message.name)
         .orderBy(FirebaseEnums.date.name)
-        .limit(1)
+        .limit(10)
         .snapshots();
     return snapShot.map((mesajListesi) => mesajListesi.docs.map((mesaj) => ChatModel.fromMap(mesaj.data())).toList());
   }

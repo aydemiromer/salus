@@ -31,10 +31,10 @@
               "client_type": 3
             },
             {
-              "client_id": "985016749874-jod5subujq4thcqstvt5ju36f8fqn5vb.apps.googleusercontent.com",
+              "client_id": "985016749874-3pmq385t3ionbobh7l0ovq38vbf92g6h.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.example.salus"
+                "bundle_id": "com.example.salusApp"
               }
             }
           ]
