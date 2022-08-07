@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../core/init/socials/provider/login/services/apple_social_login.dart';
 import '../../../../core/init/socials/provider/login/services/google_social_login.dart';
@@ -23,7 +24,7 @@ abstract class IAuthenticationService {
   User? currentUser;
   Stream<User?>? authStateChanges();
   Future<UserCredential?> signinWithCustom(LoginModel model);
-  Future<UserCredential?> registerCustom( RegisterModel model, String name, String surname);
+  Future<UserCredential?> registerCustom(RegisterModel model, String name, String surname);
   Future<UserCredential?> signinGoogleCustom();
   Future<UserCredential?> signinAppleCustom();
   Future<void> signOut();
@@ -94,6 +95,8 @@ class AuthenticationService extends IAuthenticationService with ErrorMixin {
   @override
   Future<void> signOut() async {
     await firebaseAuth.signOut();
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.clear();
   }
 
   @override

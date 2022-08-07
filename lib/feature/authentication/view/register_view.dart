@@ -65,7 +65,7 @@ class RegisterView extends StatelessWidget {
     return ProductText.headline1(
       LocaleKeys.auth_register.tr(),
       context: context,
-      color: context.colorScheme.onPrimary,
+      color: context.colorScheme.primary,
     );
   }
 }

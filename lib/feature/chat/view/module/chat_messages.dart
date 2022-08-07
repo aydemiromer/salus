@@ -7,18 +7,18 @@ class _ChatMessagesState extends StatelessWidget {
   Widget build(BuildContext context) {
     var benimMesajimMi = model.whoIsThis;
 
-    var _timeValues = _timeShowing(model.date ?? Timestamp(1,1));
+    var timeValues = _timeShowing(model.date ?? Timestamp(1,1));
 
     if (benimMesajimMi!) {
-      return ChatBox(model: model, axisType: CrossAxisAlignment.end,date: _timeValues);
+      return ChatBox(model: model, axisType: CrossAxisAlignment.end,date: timeValues);
     } else {
-      return ChatBox(model: model, axisType: CrossAxisAlignment.start,date: _timeValues);
+      return ChatBox(model: model, axisType: CrossAxisAlignment.start,date: timeValues);
     }
   }
 
   String _timeShowing(Timestamp date) {
-    var _format = DateFormat.Hm();
-    var _formatedDate = _format.format(date.toDate());
-    return _formatedDate;
+    var format = DateFormat.Hm();
+    var formatedDate = format.format(date.toDate());
+    return formatedDate;
   }
 }

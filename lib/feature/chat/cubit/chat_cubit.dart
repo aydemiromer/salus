@@ -18,8 +18,9 @@ class ChatCubit extends Cubit<ChatState> {
 
   Future<void> init(String status) async {
     emit(state.copyWith(isLoading: true));
-    getUsersFromFirebase();
+
     final prefs = await SharedPreferences.getInstance();
+    await getUsersFromFirebase();
 
     final String? userID = prefs.getString(FirebaseEnums.userUID.name);
     final String? userRole = prefs.getString(FirebaseEnums.userRole.name);

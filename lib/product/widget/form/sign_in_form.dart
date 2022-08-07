@@ -78,7 +78,7 @@ class _SignInFormState extends State<SignInForm> {
           });
         }
       },
-      title: "Login",
+      title: LocaleKeys.auth_login.tr(),
     );
   }
 

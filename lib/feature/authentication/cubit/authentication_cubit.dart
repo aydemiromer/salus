@@ -22,6 +22,11 @@ class AuthenticationCubit extends Cubit<AuthtenticationState> {
   Future<bool?> loginCustom(String mail, String password, context) async {
     final response = await authenticationService.signinWithCustom(LoginModel(mail, password));
     if (response != null) {
+      final prefs = await SharedPreferences.getInstance();
+
+      await prefs.setString('userUID', response.user!.uid);
+      
+      await Future.delayed(const Duration(seconds: 1));
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => const Navbar()),
@@ -29,9 +34,7 @@ class AuthenticationCubit extends Cubit<AuthtenticationState> {
       emit(state.copyWith(credential: response, userUid: response.user?.uid));
 
       debugPrint(response.user!.uid);
-      final prefs = await SharedPreferences.getInstance();
 
-      await prefs.setString('userUID', response.user!.uid);
       UserContext().saveAuth(FirebaseAuth.instance);
       return true;
     }

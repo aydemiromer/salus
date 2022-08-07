@@ -29,21 +29,21 @@ class LoginView extends StatelessWidget {
         backgroundColor: context.colorScheme.primary,
         body: SingleChildScrollView(
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
+            crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
+              CustomNetworkImage(
+                imageUrl: ImageStatic.imageUrl,
+                height: context.dynamicHeight(.5),
+              ),
               context.emptySizedHeightBoxNormal,
-              context.emptySizedHeightBoxNormal,
-              context.emptySizedHeightBoxNormal,
-              const CustomNetworkImage(imageUrl: ImageStatic.imageUrl),
-              context.emptySizedHeightBoxNormal,
-              context.emptySizedHeightBoxNormal,
+              _loginTitle(context),
+              context.emptySizedHeightBoxLow,
               FormInputCard(
                   margin: EdgeInsets.zero,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      _loginTitle(context),
                       const SizedBox(height: WidgetSizes.spacingM),
                       SignInForm(
                         onSuccses: (email, password) async {
@@ -62,10 +62,10 @@ class LoginView extends StatelessWidget {
   }
 
   ProductText _loginTitle(BuildContext context) {
-    return ProductText.headline3(
-      "${LocaleKeys.auth_welcome.tr()}${LocaleKeys.auth_login.tr()}",
+    return ProductText.headline2(
+      "${LocaleKeys.title_salus.tr()} ",
       context: context,
-      color: context.colorScheme.primary,
+      color: context.colorScheme.background,
     );
   }
 

@@ -35,6 +35,8 @@ class ChatDetailView extends StatefulWidget {
 class _ChatDetailViewState extends State<ChatDetailView> with WidgetsBindingObserver, StateMixin {
   @override
   late final TextEditingController? _textController;
+  final ScrollController _scrollController = ScrollController();
+
   @override
   void initState() {
     super.initState();
@@ -59,7 +61,7 @@ class _ChatDetailViewState extends State<ChatDetailView> with WidgetsBindingObse
             builder: ((context, state) => Scaffold(
                   backgroundColor: context.colorScheme.onBackground,
                   appBar: _appbar(state),
-                  body: _body(context, widget.model, _textController, state),
+                  body: _body(context, widget.model, _textController, state, _scrollController),
                 ))));
   }
 }
@@ -68,11 +70,11 @@ AppBarWidget _appbar(state) => AppBarWidget(
       state: state,
     );
 
-Widget _body(BuildContext context, UserModel user, textController, ChatState state) => Column(
+Widget _body(BuildContext context, UserModel user, textController, ChatState state, scrollController) => Column(
       children: [
         _DetailListTile(user: user, state: state),
         const GrayDivider(),
-        _streamMessages(context, user, state),
+        _streamMessages(context, user, state, scrollController),
         ChatTextField(
           user: user,
           textController: textController,
@@ -81,7 +83,7 @@ Widget _body(BuildContext context, UserModel user, textController, ChatState sta
       ],
     );
 
-Expanded _streamMessages(BuildContext context, UserModel user, ChatState state) {
+Expanded _streamMessages(BuildContext context, UserModel user, ChatState state, scrollController) {
   return Expanded(
       child: Container(
     color: context.colorScheme.background,
@@ -90,6 +92,7 @@ Expanded _streamMessages(BuildContext context, UserModel user, ChatState state) 
       builder: (context, streamMessages) {
         var allMessages = streamMessages.data;
         return ListView.builder(
+            controller: scrollController,
             itemBuilder: ((context, index) {
               return _ChatMessagesState(model: allMessages?[index] ?? ChatModel());
             }),

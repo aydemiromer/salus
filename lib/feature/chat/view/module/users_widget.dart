@@ -11,7 +11,7 @@ class MyUserList extends StatelessWidget {
       color: context.colorScheme.background,
       height: context.dynamicHeight(.615),
       child: ListView.builder(
-          itemCount: state.userList?.length,
+          itemCount: state.userList?.length ?? 0,
           itemBuilder: ((BuildContext context, index) {
             UserModel? user = state.userList?[index];
 
@@ -20,7 +20,8 @@ class MyUserList extends StatelessWidget {
             return ColumnWithSpacing(space: 5, children: [
               InkWell(
                   onDoubleTap: () {
-                    _showModal(context, corp, user?.userID);
+                    print(state.userRole);
+                    state.userRole == "Admin" ? _showModal(context, corp, user?.userID) : null;
                   },
                   onTap: () async {
                     Navigator.push(
@@ -139,10 +140,10 @@ _showModal(BuildContext context, corp, state) {
 
 ProductText _assignTitle(BuildContext context) {
   return ProductText.headline3(
-              LocaleKeys.title_therapists.tr(),
-              context: context,
-              color: context.colorScheme.primary,
-            );
+    LocaleKeys.title_therapists.tr(),
+    context: context,
+    color: context.colorScheme.primary,
+  );
 }
 
 CustomElevatedButton _therapistButton(BuildContext context, state, corp, int index) {
