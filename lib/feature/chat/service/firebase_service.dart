@@ -21,11 +21,11 @@ class FireStoreService extends IFirebaseService {
         UserModel tekUser = UserModel.fromMap(map);
         final prefs = await SharedPreferences.getInstance();
 
-        final String? userID = prefs.getString('userUID');
-        tekUser.userID == userID ? prefs.setString('userRole', tekUser.role.toString()) : null;
-        tekUser.userID == userID ? prefs.setString('WhoCorp', tekUser.corp.toString()) : null;
-        tekUser.userID == userID ? prefs.setString('name', tekUser.name.toString()) : null;
-        tekUser.userID == userID ? prefs.setString('surname', tekUser.surname.toString()) : null;
+        final String? userID = prefs.getString(FirebaseEnums.userUID.name);
+        tekUser.userID == userID ? prefs.setString(FirebaseEnums.userRole.name, tekUser.role.toString()) : null;
+        tekUser.userID == userID ? prefs.setString(FirebaseEnums.whoCorp.name, tekUser.corp.toString()) : null;
+        tekUser.userID == userID ? prefs.setString(FirebaseEnums.name.name, tekUser.name.toString()) : null;
+        tekUser.userID == userID ? prefs.setString(FirebaseEnums.surname.name, tekUser.surname.toString()) : null;
         myUsers.add(tekUser);
       }
     } catch (error) {
@@ -40,10 +40,13 @@ class FireStoreService extends IFirebaseService {
     try {
       final prefs = await SharedPreferences.getInstance();
 
-      final String? userID = prefs.getString('userUID');
-      await fireStore.collection(FirebaseEnums.users.name).doc(userID).update({'name': name, 'surname': surname});
-      prefs.setString('name', name.toString());
-      prefs.setString('surname', surname.toString());
+      final String? userID = prefs.getString(FirebaseEnums.userUID.name);
+      await fireStore
+          .collection(FirebaseEnums.users.name)
+          .doc(userID)
+          .update({FirebaseEnums.name.name: name, FirebaseEnums.surname.name: surname});
+      prefs.setString(FirebaseEnums.name.name, name.toString());
+      prefs.setString(FirebaseEnums.surname.name, surname.toString());
     } catch (e) {
       return null;
     }
@@ -53,7 +56,10 @@ class FireStoreService extends IFirebaseService {
   Future getAndPushToken(String userID) async {
     try {
       String? tokenId = await FirebaseMessaging.instance.getToken();
-      await fireStore.collection(FirebaseEnums.users.name).doc(userID).update({'deviceToken': tokenId});
+      await fireStore
+          .collection(FirebaseEnums.users.name)
+          .doc(userID)
+          .update({FirebaseEnums.deviceToken.name: tokenId});
     } catch (e) {
       return null;
     }
@@ -80,10 +86,13 @@ class FireStoreService extends IFirebaseService {
   @override
   Future registerUser(String userID, String name, String email, String surname) async {
     try {
-      await fireStore
-          .collection(FirebaseEnums.users.name)
-          .doc(userID)
-          .set({"name": name, "surname": surname, "email": email, "userID": userID, "role": "personal"});
+      await fireStore.collection(FirebaseEnums.users.name).doc(userID).set({
+        FirebaseEnums.name.name: name,
+        FirebaseEnums.surname.name: surname,
+        FirebaseEnums.email.name: email,
+        FirebaseEnums.userID.name: userID,
+        FirebaseEnums.role.name: "personal"
+      });
     } catch (e) {
       return null;
     }
@@ -128,7 +137,7 @@ class FireStoreService extends IFirebaseService {
         .doc(messageId)
         .set(savedMessage);
 
-    savedMessage.update('whoIsThis', (value) => false);
+    savedMessage.update(FirebaseEnums.whoIsThis.name, (value) => false);
 
     await fireStore
         .collection(FirebaseEnums.chat.name)
@@ -138,7 +147,7 @@ class FireStoreService extends IFirebaseService {
         .set(savedMessage);
 
     await fireStore.collection(FirebaseEnums.users.name).doc(message.sender).update({
-      "message": message.message,
+      FirebaseEnums.message.name: message.message,
     });
     return true;
   }
