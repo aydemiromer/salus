@@ -4,6 +4,8 @@ This app is about users being able to chat with therapists easily.
 
 ## Getting Started
 
+Flutter SDK Version => 3.0.4
+
 Add this to your package's `pubspec.yaml` file:
 
 ```yaml
