@@ -77,6 +77,6 @@ Features available in the app
 - User status badges
 - Fastlane update to App Store
 
-
+The application summary is as follows, after the user logs in, the admin greets him. After the user talks to the admin via chat, the admin assigns a therapist to the user. Then, the user has a meeting with the therapist. The user has a page where he can update his name and surname. Users' online and offline statuses are under control, such as whether a therapist is appointed.
 
 
