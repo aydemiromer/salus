@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:kartal/kartal.dart';
 import 'package:salus/feature/authentication/view/login_view.dart';
+import 'package:salus/feature/profile/view/profile_view.dart';
 
 import '../../../core/init/socials/provider/login/services/apple_social_login.dart';
 import '../../../core/init/socials/provider/login/services/google_social_login.dart';
@@ -22,7 +23,12 @@ class AppBarWidget extends StatelessWidget with PreferredSizeWidget {
       centerTitle: false,
       actions: [
         IconButton(
-          onPressed: () {},
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const ProfileView()),
+            );
+          },
           color: context.colorScheme.onSurface,
           icon: const Icon(Icons.person_outline),
         ),
