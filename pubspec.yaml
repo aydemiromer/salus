@@ -23,6 +23,7 @@ dependencies:
 
   # State
   flutter_bloc: ^8.0.1
+  provider: ^6.0.3
 
   # Localization
   easy_localization: ^3.0.0
@@ -53,9 +54,10 @@ dependencies:
 
   json_annotation: ^4.6.0
   logger: ^1.1.0
-  provider: ^6.0.3
+  
   shared_preferences: ^2.0.15
   dio: ^4.0.6
+  intl: ^0.17.0
   
   
   
