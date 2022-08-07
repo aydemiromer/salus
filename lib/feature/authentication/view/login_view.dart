@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kartal/kartal.dart';
 import 'package:salus/core/widget/image/custom_network_image.dart';
 import 'package:salus/feature/authentication/service/auth_service.dart';
+import 'package:salus/feature/authentication/view/register_view.dart';
 import 'package:salus/product/utils/text/product_text.dart';
 
 import '../../../core/init/socials/provider/login/services/apple_social_login.dart';
@@ -40,13 +41,27 @@ class LoginView extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      ProductText.headline1("Welcome", context: context),
+                      ProductText.headline3(
+                        "Welcome, Giriş Yapınız",
+                        context: context,
+                        color: context.colorScheme.primary,
+                      ),
                       const SizedBox(height: WidgetSizes.spacingM),
                       SignInForm(
                         onSuccses: (email, password) async {
                           await context.read<AuthenticationCubit>().loginCustom(email, password, context);
                         },
                       ),
+                      Center(
+                          child: TextButton(
+                              onPressed: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => const RegisterView(),
+                                    ));
+                              },
+                              child: const Text("Kayıt Ol"))),
                       context.emptySizedHeightBoxNormal
                     ],
                   )),

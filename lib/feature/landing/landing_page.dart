@@ -5,7 +5,7 @@ import 'package:salus/product/widget/navbar/navbar_widget.dart';
 import '../../core/init/socials/provider/login/services/apple_social_login.dart';
 import '../../core/init/socials/provider/login/services/google_social_login.dart';
 import '../authentication/service/auth_service.dart';
-import '../authentication/view/auth_view.dart';
+import '../authentication/view/login_view.dart';
 
 class LandingPage extends StatelessWidget {
   @override

@@ -2,7 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:kartal/kartal.dart';
-import 'package:salus/feature/authentication/view/auth_view.dart';
+import 'package:salus/feature/authentication/view/login_view.dart';
 
 import '../../../core/init/socials/provider/login/services/apple_social_login.dart';
 import '../../../core/init/socials/provider/login/services/google_social_login.dart';
