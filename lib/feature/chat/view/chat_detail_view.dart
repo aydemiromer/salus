@@ -3,6 +3,8 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kartal/kartal.dart';
+import 'package:salus/product/enums/firebase_enums.dart';
+import 'package:salus/product/mixin/user_status_mixin.dart';
 import 'package:salus/product/service/notification.dart';
 import 'package:salus/product/widget/chat/chat_box.dart';
 import 'package:salus/product/widget/divider/gray_divider.dart';
@@ -30,9 +32,9 @@ class ChatDetailView extends StatefulWidget {
   State<ChatDetailView> createState() => _ChatDetailViewState();
 }
 
-class _ChatDetailViewState extends State<ChatDetailView> {
+class _ChatDetailViewState extends State<ChatDetailView> with WidgetsBindingObserver, StateMixin {
   @override
-  TextEditingController? _textController;
+  late final TextEditingController? _textController;
   @override
   void initState() {
     super.initState();

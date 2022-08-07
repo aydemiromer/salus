@@ -20,5 +20,21 @@
         "appoinmentConfirm": "Randevu Ayarlandı",
         "trip": "Yolculuk Atandı",
         "therapist": "Terapist Atandı"
+    }, 
+    "auth": {
+        "login": "Giriş Yap", 
+        "register": "Kayıt Ol",
+        "name": "İsim", 
+        "surname": "Soyisim", 
+        "email": "Mail", 
+        "password": "Parola",
+        "welcome": "Hoş geldiniz"
+    }, 
+    "emptyText": {
+        "lorem": "Lorem İpsum Lorem İpsum Lorem İpsummm Lorem İpsum  Lorem İpsum  Lorem İpsum"
+    }, 
+    "title": {
+        "therapists": "Terapistler", 
+        "salus": "Salus Mental"
     }
 }

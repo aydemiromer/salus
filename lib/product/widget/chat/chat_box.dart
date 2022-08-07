@@ -15,18 +15,20 @@ class ChatBox extends StatelessWidget {
       padding: const PagePadding.allLow(),
       child: Column(
         crossAxisAlignment: axisType,
-        children: [
-          Container(
-            width: context.dynamicWidth(.6),
-            padding: const PagePadding.allLow(),
-            decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: context.colorScheme.onTertiary),
-            child: ProductText.normalGreyWithBoldOption(
-              model?.message.toString() ?? '',
-              context: context,
-              fontWeight: FontWeight.w300,
-            ),
-          )
-        ],
+        children: [_messagesContainer(context)],
+      ),
+    );
+  }
+
+  Container _messagesContainer(BuildContext context) {
+    return Container(
+      width: context.dynamicWidth(.6),
+      padding: const PagePadding.allLow(),
+      decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: context.colorScheme.onTertiary),
+      child: ProductText.normalGreyWithBoldOption(
+        model?.message.toString() ?? '',
+        context: context,
+        fontWeight: FontWeight.w300,
       ),
     );
   }

@@ -32,26 +32,34 @@ class AppBarWidget extends StatelessWidget with PreferredSizeWidget {
           color: context.colorScheme.onSurface,
           icon: const Icon(Icons.person_outline),
         ),
-        IconButton(
-          onPressed: () async {
-            IAuthenticationService authenticationService =
-                AuthenticationService(FirebaseAuth.instance, GoogleLogin(), AppleSocialLogin());
-            await authenticationService.signOut();
-            // ignore: use_build_context_synchronously
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => const LoginView()),
-            );
-          },
-          color: context.colorScheme.onSurface,
-          icon: const Icon(Icons.logout),
-        ),
+        _logOutButton(context),
       ],
-      title: ProductText.headline2(
-        LocaleKeys.appbar_title.tr(),
-        context: context,
-        color: context.colorScheme.secondary,
-      ).fontWeight(weight: FontWeight.w600),
+      title: _appBarTitle(context).fontWeight(weight: FontWeight.w600),
+    );
+  }
+
+  IconButton _logOutButton(BuildContext context) {
+    return IconButton(
+      onPressed: () async {
+        IAuthenticationService authenticationService =
+            AuthenticationService(FirebaseAuth.instance, GoogleLogin(), AppleSocialLogin());
+        await authenticationService.signOut();
+        // ignore: use_build_context_synchronously
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const LoginView()),
+        );
+      },
+      color: context.colorScheme.onSurface,
+      icon: const Icon(Icons.logout),
+    );
+  }
+
+  ProductText _appBarTitle(BuildContext context) {
+    return ProductText.headline2(
+      LocaleKeys.appbar_title.tr(),
+      context: context,
+      color: context.colorScheme.secondary,
     );
   }
 

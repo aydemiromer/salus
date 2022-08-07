@@ -8,6 +8,8 @@ import '../authentication/service/auth_service.dart';
 import '../authentication/view/login_view.dart';
 
 class LandingPage extends StatelessWidget {
+  const LandingPage({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     IAuthenticationService authenticationService =

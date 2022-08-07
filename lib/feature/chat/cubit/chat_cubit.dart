@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kartal/kartal.dart';
 import 'package:salus/feature/chat/model/chat_model.dart';
+import 'package:salus/product/enums/firebase_enums.dart';
 import 'package:salus/product/model/user/user_model.dart';
 import 'package:salus/feature/chat/service/Ifirebase_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -20,9 +21,9 @@ class ChatCubit extends Cubit<ChatState> {
     getUsersFromFirebase();
     final prefs = await SharedPreferences.getInstance();
 
-    final String? userID = prefs.getString('userUID');
-    final String? userRole = prefs.getString('userRole');
-    final String? userCorp = prefs.getString('WhoCorp');
+    final String? userID = prefs.getString(FirebaseEnums.userUID.name);
+    final String? userRole = prefs.getString(FirebaseEnums.userRole.name);
+    final String? userCorp = prefs.getString(FirebaseEnums.whoCorp.name);
 
     emit(state.copyWith(userUID: userID, userRole: userRole, userCorpAssign: userCorp, isLoading: false));
 
@@ -44,14 +45,13 @@ class ChatCubit extends Cubit<ChatState> {
 
   Future assignCorp(String userID, String corpID) async {
     await firebaseService.corpAssign(userID, corpID);
-    await firebaseService.setAssign(userID, "Terapist Atandı");
+    await firebaseService.setAssign(userID, LocaleKeys.assignment_therapist.tr());
   }
 
   void userUid() async {
     final prefs = await SharedPreferences.getInstance();
-
-    final String? userID = prefs.getString('userUID');
-    final String? userRole = prefs.getString('userRole');
+    final String? userID = prefs.getString(FirebaseEnums.userUID.name);
+    final String? userRole = prefs.getString(FirebaseEnums.userRole.name);
 
     emit(state.copyWith(userUID: userID, userRole: userRole));
   }

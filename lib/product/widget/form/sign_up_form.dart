@@ -1,6 +1,8 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:kartal/kartal.dart';
+import 'package:salus/product/init/language/locale_keys.g.dart';
 import 'package:salus/product/widget/column/column_with_divider.dart';
 
 import '../../../core/utility/padding/page_padding.dart';
@@ -103,7 +105,7 @@ class _SignUpFormState extends State<SignUpForm> {
             child: Icon(_obscureText ? FontAwesomeIcons.eye : FontAwesomeIcons.eyeSlash),
           ),
           border: OutlineInputBorder(borderRadius: context.lowBorderRadius),
-          label: const Text("Password")),
+          label: Text(LocaleKeys.auth_password.tr())),
       //validator: (value) => (value ?? '').isValidPassword ? null : "hata",
     );
   }
@@ -125,7 +127,7 @@ class _SignUpFormState extends State<SignUpForm> {
             child: Icon(_obscureText ? FontAwesomeIcons.eye : FontAwesomeIcons.eyeSlash),
           ),
           border: OutlineInputBorder(borderRadius: context.lowBorderRadius),
-          label: const Text("Re-Password")),
+          label: Text(LocaleKeys.auth_password.tr())),
       //validator: (value) => (value ?? '').isValidPassword ? null : "hata",
     );
   }
@@ -141,7 +143,7 @@ class _SignUpFormState extends State<SignUpForm> {
       decoration: InputDecoration(
           prefixIcon: const Icon(Icons.email_outlined),
           border: OutlineInputBorder(borderRadius: context.lowBorderRadius),
-          label: const Text("Email")),
+          label: Text(LocaleKeys.auth_email.tr())),
       validator: (value) => (value ?? '').isValidEmail ? null : "",
     );
   }
@@ -157,7 +159,7 @@ class _SignUpFormState extends State<SignUpForm> {
       decoration: InputDecoration(
           prefixIcon: const Icon(Icons.person),
           border: OutlineInputBorder(borderRadius: context.lowBorderRadius),
-          label: const Text("Name")),
+          label: Text(LocaleKeys.auth_name.tr())),
       validator: (value) => (value ?? '').isNotEmpty ? null : "",
     );
   }
@@ -173,7 +175,7 @@ class _SignUpFormState extends State<SignUpForm> {
       decoration: InputDecoration(
           prefixIcon: const Icon(Icons.person),
           border: OutlineInputBorder(borderRadius: context.lowBorderRadius),
-          label: const Text("Surname")),
+          label: Text(LocaleKeys.auth_surname.tr())),
       validator: (value) => (value ?? '').isNotEmpty ? null : "",
     );
   }

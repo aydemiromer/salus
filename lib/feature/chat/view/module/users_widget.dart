@@ -62,9 +62,7 @@ class MyUserList extends StatelessWidget {
             ],
           ),
           subtitle: Text(
-            user.message.isNotNullOrNoEmpty
-                ? user.message.toString()
-                : "Lorem İpsum Lorem İpsum Lorem İpsummm Lorem İpsum  Lorem İpsum  Lorem İpsum",
+            user.message.isNotNullOrNoEmpty ? user.message.toString() : LocaleKeys.emptyText_lorem.tr(),
             overflow: TextOverflow.ellipsis,
           ),
         ),
@@ -121,11 +119,7 @@ _showModal(BuildContext context, corp, state) {
           child: Column(
             children: [
               context.emptySizedHeightBoxLow3x,
-              ProductText.headline3(
-                "Terapistler",
-                context: context,
-                color: context.colorScheme.primary,
-              ),
+              _assignTitle(context),
               context.emptySizedHeightBoxLow3x,
               SizedBox(
                 height: context.dynamicHeight(.3),
@@ -133,28 +127,7 @@ _showModal(BuildContext context, corp, state) {
                 child: ListView.builder(
                   itemCount: corp.length,
                   itemBuilder: ((context, index) {
-                    return CustomElevatedButton(
-                      color: context.colorScheme.primary,
-                      height: context.dynamicHeight(.08),
-                      width: context.dynamicWidth(.9),
-                      borderRadius: 20,
-                      onPressed: () async {
-                        IFirebaseService? firebaseService = FireStoreService(FirebaseFirestore.instance);
-
-                        debugPrint(state.toString());
-                        debugPrint(corp[index].userID.toString());
-                        await firebaseService.corpAssign(state.toString(), corp[index].userID.toString());
-                        await firebaseService.setAssign(state.toString(), "Terapist Atandı");
-                        /*await context
-                            .watch<ChatCubit>()
-                            .assignCorp(state.userList?[index].userID, corp[index].userID.toString());*/
-                      },
-                      child: ProductText.headline3(
-                        "${corp[index].name}  ${corp[index].surname}",
-                        context: context,
-                        color: context.colorScheme.background,
-                      ),
-                    );
+                    return _therapistButton(context, state, corp, index);
                   }),
                 ),
               ),
@@ -162,4 +135,34 @@ _showModal(BuildContext context, corp, state) {
           ),
         );
       });
+}
+
+ProductText _assignTitle(BuildContext context) {
+  return ProductText.headline3(
+              LocaleKeys.title_therapists.tr(),
+              context: context,
+              color: context.colorScheme.primary,
+            );
+}
+
+CustomElevatedButton _therapistButton(BuildContext context, state, corp, int index) {
+  return CustomElevatedButton(
+    color: context.colorScheme.primary,
+    height: context.dynamicHeight(.08),
+    width: context.dynamicWidth(.9),
+    borderRadius: 20,
+    onPressed: () async {
+      IFirebaseService? firebaseService = FireStoreService(FirebaseFirestore.instance);
+
+      debugPrint(state.toString());
+      debugPrint(corp[index].userID.toString());
+      await firebaseService.corpAssign(state.toString(), corp[index].userID.toString());
+      await firebaseService.setAssign(state.toString(), LocaleKeys.assignment_therapist.tr());
+    },
+    child: ProductText.headline3(
+      "${corp[index].name}  ${corp[index].surname}",
+      context: context,
+      color: context.colorScheme.background,
+    ),
+  );
 }

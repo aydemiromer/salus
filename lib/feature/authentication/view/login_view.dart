@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -5,6 +6,8 @@ import 'package:kartal/kartal.dart';
 import 'package:salus/core/widget/image/custom_network_image.dart';
 import 'package:salus/feature/authentication/service/auth_service.dart';
 import 'package:salus/feature/authentication/view/register_view.dart';
+import 'package:salus/product/constants/image/image.dart';
+import 'package:salus/product/init/language/locale_keys.g.dart';
 import 'package:salus/product/utils/text/product_text.dart';
 
 import '../../../core/init/socials/provider/login/services/apple_social_login.dart';
@@ -32,8 +35,7 @@ class LoginView extends StatelessWidget {
               context.emptySizedHeightBoxNormal,
               context.emptySizedHeightBoxNormal,
               context.emptySizedHeightBoxNormal,
-              const CustomNetworkImage(
-                  imageUrl: 'https://cobidu.co.uk/shared/images/general/57_mental-health_607219ac4f969.png'),
+              const CustomNetworkImage(imageUrl: ImageStatic.imageUrl),
               context.emptySizedHeightBoxNormal,
               context.emptySizedHeightBoxNormal,
               FormInputCard(
@@ -41,27 +43,14 @@ class LoginView extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      ProductText.headline3(
-                        "Welcome, Giriş Yapınız",
-                        context: context,
-                        color: context.colorScheme.primary,
-                      ),
+                      _loginTitle(context),
                       const SizedBox(height: WidgetSizes.spacingM),
                       SignInForm(
                         onSuccses: (email, password) async {
                           await context.read<AuthenticationCubit>().loginCustom(email, password, context);
                         },
                       ),
-                      Center(
-                          child: TextButton(
-                              onPressed: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => const RegisterView(),
-                                    ));
-                              },
-                              child: const Text("Kayıt Ol"))),
+                      _registerButton(context),
                       context.emptySizedHeightBoxNormal
                     ],
                   )),
@@ -70,5 +59,26 @@ class LoginView extends StatelessWidget {
         ),
       );
     }));
+  }
+
+  ProductText _loginTitle(BuildContext context) {
+    return ProductText.headline3(
+      "${LocaleKeys.auth_welcome.tr()}${LocaleKeys.auth_login.tr()}",
+      context: context,
+      color: context.colorScheme.primary,
+    );
+  }
+
+  Center _registerButton(BuildContext context) {
+    return Center(
+        child: TextButton(
+            onPressed: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const RegisterView(),
+                  ));
+            },
+            child: Text(LocaleKeys.auth_register.tr())));
   }
 }

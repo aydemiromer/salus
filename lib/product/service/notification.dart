@@ -6,7 +6,7 @@ import 'Inotification.dart';
 class NotificationService extends IFirebaseNotificationService {
   @override
   Future sendNotification(String? token, String? message, String? name) async {
-    print("girdi");
+    
     String endURL = "https://fcm.googleapis.com/fcm/send";
     String firebaseKey =
         "AAAA5VeSzzI:APA91bFvk-Sdyij_QYYayxrGt7tNAI0dWFzWJYqL1hFrH8w8J4uJsgzrNdD24dTg_d6TGIPaxwL7ItdcskxrLTzeXoHt-_oIECfO4aC9eyPtMPXL6B7kxvXtrZ7d4ERqAiaVbWLABYNY";

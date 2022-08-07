@@ -1,6 +1,8 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:kartal/kartal.dart';
+import 'package:salus/product/init/language/locale_keys.g.dart';
 
 import '../../../core/utility/padding/page_padding.dart';
 import '../../../core/utility/size/widget_size.dart';
@@ -97,7 +99,7 @@ class _SignInFormState extends State<SignInForm> {
             child: Icon(_obscureText ? FontAwesomeIcons.eye : FontAwesomeIcons.eyeSlash),
           ),
           border: OutlineInputBorder(borderRadius: context.lowBorderRadius),
-          label: const Text("Password")),
+          label:  Text(LocaleKeys.auth_password.tr())),
       //validator: (value) => (value ?? '').isValidPassword ? null : "hata",
     );
   }
@@ -113,7 +115,7 @@ class _SignInFormState extends State<SignInForm> {
       decoration: InputDecoration(
           prefixIcon: const Icon(Icons.email_outlined),
           border: OutlineInputBorder(borderRadius: context.lowBorderRadius),
-          label: const Text("email")),
+          label:  Text(LocaleKeys.auth_email.tr())),
       validator: (value) => (value ?? '').isValidEmail ? null : "",
     );
   }

@@ -8,12 +8,13 @@ class ProfileForm extends StatefulWidget {
   final SignInSuccess onSuccses;
 
   @override
+  // ignore: library_private_types_in_public_api
   _ProfileFormState createState() => _ProfileFormState();
 }
 
 class _ProfileFormState extends State<ProfileForm> {
   bool isFirstValidate = false;
-  bool _obscureText = true;
+  final bool _obscureText = true;
   final _formKey = GlobalKey<FormState>();
 
   TextEditingController? _emailController;
@@ -49,11 +50,6 @@ class _ProfileFormState extends State<ProfileForm> {
     setState(() {});
   }
 
-  void _changePasswordFieldVisibilty() {
-    setState(() {
-      _obscureText = !_obscureText;
-    });
-  }
 
   Widget _signInButton(BuildContext context) {
     return LoadingElevetedButton(
@@ -85,7 +81,7 @@ class _ProfileFormState extends State<ProfileForm> {
       decoration: InputDecoration(
           prefixIcon: const Icon(Icons.person),
           border: OutlineInputBorder(borderRadius: context.lowBorderRadius),
-          label: const Text("Surname")),
+          label: Text(LocaleKeys.auth_surname.tr())),
       //validator: (value) => (value ?? '').isValidPassword ? null : "hata",
     );
   }
@@ -101,7 +97,7 @@ class _ProfileFormState extends State<ProfileForm> {
       decoration: InputDecoration(
           prefixIcon: const Icon(Icons.person),
           border: OutlineInputBorder(borderRadius: context.lowBorderRadius),
-          label: const Text("Name")),
+          label: Text(LocaleKeys.auth_name.tr())),
     );
   }
 }

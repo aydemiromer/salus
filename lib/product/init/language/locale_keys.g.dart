@@ -18,5 +18,18 @@ abstract class  LocaleKeys {
   static const assignment_trip = 'assignment.trip';
   static const assignment_therapist = 'assignment.therapist';
   static const assignment = 'assignment';
+  static const auth_login = 'auth.login';
+  static const auth_register = 'auth.register';
+  static const auth_name = 'auth.name';
+  static const auth_surname = 'auth.surname';
+  static const auth_email = 'auth.email';
+  static const auth_password = 'auth.password';
+  static const auth_welcome = 'auth.welcome';
+  static const auth = 'auth';
+  static const emptyText_lorem = 'emptyText.lorem';
+  static const emptyText = 'emptyText';
+  static const title_therapists = 'title.therapists';
+  static const title_salus = 'title.salus';
+  static const title = 'title';
 
 }

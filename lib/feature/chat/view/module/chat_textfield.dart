@@ -12,38 +12,42 @@ class ChatTextField extends StatelessWidget {
       padding: const PagePadding.allLow2x() / 2,
       child: Container(
         color: context.colorScheme.background,
-        child: Row(
-          children: [
-            Expanded(
-                child: TextField(
-              controller: textController,
-            )),
-            IconButton(
-                color: context.colorScheme.surface,
-                onPressed: () async {
-                  if (textController!.text.trim().isNotEmpty) {
-                    final prefs = await SharedPreferences.getInstance();
-
-                    final String? userID = prefs.getString('userUID');
-                    ChatModel currentMessage =
-                        ChatModel(getter: user.userID, sender: userID, whoIsThis: true, message: textController!.text);
-                    var result = await context.read<ChatCubit>().saveMessages(currentMessage, userID.toString());
-                    IFirebaseNotificationService? firebaseService;
-                    debugPrint(user.deviceToken);
-                    debugPrint(userID.toString());
-
-                    await NotificationService()
-                        .sendNotification(user.deviceToken, textController!.text.toString(), userID.toString());
-
-                    if (result) {
-                      textController!.clear();
-                    }
-                  }
-                },
-                icon: const Icon(Icons.send))
-          ],
-        ),
+        child: _messageTextFieldAndButton(context),
       ),
+    );
+  }
+
+  Row _messageTextFieldAndButton(BuildContext context) {
+    return Row(
+      children: [
+        Expanded(
+            child: TextField(
+          controller: textController,
+        )),
+        IconButton(
+            color: context.colorScheme.surface,
+            onPressed: () async {
+              if (textController!.text.trim().isNotEmpty) {
+                final prefs = await SharedPreferences.getInstance();
+
+                final String? userID = prefs.getString(FirebaseEnums.userUID.name);
+                ChatModel currentMessage =
+                    ChatModel(getter: user.userID, sender: userID, whoIsThis: true, message: textController!.text);
+                // ignore: use_build_context_synchronously
+                var result = await context.read<ChatCubit>().saveMessages(currentMessage, userID.toString());
+                // ignore: unused_local_variable
+                IFirebaseNotificationService? firebaseService;
+
+                await NotificationService()
+                    .sendNotification(user.deviceToken, textController!.text.toString(), userID.toString());
+
+                if (result) {
+                  textController!.clear();
+                }
+              }
+            },
+            icon: const Icon(Icons.send))
+      ],
     );
   }
 }

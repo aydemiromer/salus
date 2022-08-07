@@ -12,16 +12,7 @@ class _DetailListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-        leading: CircleAvatar(
-            radius: 30,
-            backgroundColor: context.colorScheme.onTertiary,
-            child: Align(
-              alignment: Alignment.center,
-              child: ProductText.semiBoldNormal(
-                '${user.name?[0]} ${user.surname?[0]} ',
-                context: context,
-              ),
-            )),
+        leading: _circleAvatar(context),
         trailing: _assignmentStatusCard(context, user, state),
         title: Row(
           children: [
@@ -33,16 +24,33 @@ class _DetailListTile extends StatelessWidget {
         ),
         subtitle: Row(
           children: [
-            CircleAvatar(
-              radius: 5,
-              backgroundColor: user.status.toString() == LocaleKeys.status_online.tr()
-                  ? context.colorScheme.surface
-                  : context.colorScheme.primary,
-            ),
+            _circleAvatarStatus(context),
             context.emptySizedWidthBoxLow,
             ProductText(user.status.toString())
           ],
         ));
+  }
+
+  CircleAvatar _circleAvatarStatus(BuildContext context) {
+    return CircleAvatar(
+            radius: 5,
+            backgroundColor: user.status.toString() == LocaleKeys.status_online.tr()
+                ? context.colorScheme.surface
+                : context.colorScheme.primary,
+          );
+  }
+
+  CircleAvatar _circleAvatar(BuildContext context) {
+    return CircleAvatar(
+          radius: 30,
+          backgroundColor: context.colorScheme.onTertiary,
+          child: Align(
+            alignment: Alignment.center,
+            child: ProductText.semiBoldNormal(
+              '${user.name?[0]} ${user.surname?[0]} ',
+              context: context,
+            ),
+          ));
   }
 }
 
