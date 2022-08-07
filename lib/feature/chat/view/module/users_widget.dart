@@ -40,7 +40,7 @@ class MyUserList extends StatelessWidget {
                                   ? (state.userList?[index].userID != state.userCorpAssign)
                                   : false)
                           ? const SizedBox()
-                          : _userListTile(context, user!)),
+                          : _userListTile(context, user ?? UserModel())),
             ]);
           })),
     );

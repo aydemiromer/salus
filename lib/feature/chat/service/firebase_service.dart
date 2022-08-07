@@ -24,6 +24,8 @@ class FireStoreService extends IFirebaseService {
         final String? userID = prefs.getString('userUID');
         tekUser.userID == userID ? prefs.setString('userRole', tekUser.role.toString()) : null;
         tekUser.userID == userID ? prefs.setString('WhoCorp', tekUser.corp.toString()) : null;
+        tekUser.userID == userID ? prefs.setString('name', tekUser.name.toString()) : null;
+        tekUser.userID == userID ? prefs.setString('surname', tekUser.surname.toString()) : null;
         myUsers.add(tekUser);
       }
     } catch (error) {
@@ -31,6 +33,20 @@ class FireStoreService extends IFirebaseService {
     }
 
     return myUsers;
+  }
+
+  @override
+  Future updateProfile(String name, String surname) async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+
+      final String? userID = prefs.getString('userUID');
+      await fireStore.collection(FirebaseEnums.users.name).doc(userID).update({'name': name, 'surname': surname});
+      prefs.setString('name', name.toString());
+      prefs.setString('surname', surname.toString());
+    } catch (e) {
+      return null;
+    }
   }
 
   @override
@@ -63,7 +79,6 @@ class FireStoreService extends IFirebaseService {
 
   @override
   Future registerUser(String userID, String name, String email, String surname) async {
-    print("Kullanıcı Eklenme Sistemi");
     try {
       await fireStore
           .collection(FirebaseEnums.users.name)
