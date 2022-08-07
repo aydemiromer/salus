@@ -1,8 +1,14 @@
 part of '../chat_view.dart';
 
-class MyUserList extends StatelessWidget {
+class MyUserList extends StatefulWidget {
   MyUserList({Key? key, required this.state}) : super(key: key);
   final ChatState state;
+
+  @override
+  State<MyUserList> createState() => _MyUserListState();
+}
+
+class _MyUserListState extends State<MyUserList> {
   List<UserModel> corp = [];
 
   @override
@@ -10,40 +16,46 @@ class MyUserList extends StatelessWidget {
     return Container(
       color: context.colorScheme.background,
       height: context.dynamicHeight(.615),
-      child: ListView.builder(
-          itemCount: state.userList?.length ?? 0,
-          itemBuilder: ((BuildContext context, index) {
-            UserModel? user = state.userList?[index];
+      child: RefreshIndicator(
+        onRefresh: () async => await context.read<ChatCubit>().getUsersFromFirebase(),
+        child: ListView.builder(
+            itemCount: widget.state.userList?.length ?? 0,
+            itemBuilder: ((BuildContext context, index) {
+              UserModel? user = widget.state.userList?[index];
 
-            state.userList?[index].role.toString() == "corp" ? corp.add(state.userList?[index]) : null;
+              widget.state.userList?[index].role.toString() == "corp" ? corp.add(widget.state.userList?[index]) : null;
 
-            return ColumnWithSpacing(space: 5, children: [
-              InkWell(
-                  onDoubleTap: () {
-                    print(state.userRole);
-                    state.userRole == "Admin" ? _showModal(context, corp, user?.userID) : null;
-                  },
-                  onTap: () async {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => ChatDetailView(
-                                model: user!,
-                              )),
-                    );
-                  },
-                  child: state.userRole != "personal" && state.category == 'user'
-                      ? (state.userUID == state.userList?[index].userID || state.userList?[index].role == "corp")
-                          ? const SizedBox()
-                          : _userListTile(context, user!)
-                      : (state.userUID == state.userList?[index].userID || state.userList?[index].role == "personal") ||
-                              (state.userList?[index].role == "corp"
-                                  ? (state.userList?[index].userID != state.userCorpAssign)
-                                  : false)
-                          ? const SizedBox()
-                          : _userListTile(context, user ?? UserModel())),
-            ]);
-          })),
+              return ColumnWithSpacing(space: 5, children: [
+                InkWell(
+                    onDoubleTap: () {
+                      print(widget.state.userRole);
+                      widget.state.userRole == "Admin" ? _showModal(context, corp, user?.userID, setState) : null;
+                      setState(() {});
+                    },
+                    onTap: () async {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => ChatDetailView(
+                                  model: user!,
+                                )),
+                      );
+                    },
+                    child: widget.state.userRole != "personal" && widget.state.category == 'user'
+                        ? (widget.state.userUID == widget.state.userList?[index].userID ||
+                                widget.state.userList?[index].role == "corp")
+                            ? const SizedBox()
+                            : _userListTile(context, user!)
+                        : (widget.state.userUID == widget.state.userList?[index].userID ||
+                                    widget.state.userList?[index].role == "personal") ||
+                                (widget.state.userRole != "Admin" && widget.state.userList?[index].role == "corp"
+                                    ? (widget.state.userList?[index].userID != widget.state.userCorpAssign)
+                                    : false)
+                            ? const SizedBox()
+                            : _userListTile(context, user ?? UserModel())),
+              ]);
+            })),
+      ),
     );
   }
 
@@ -98,7 +110,7 @@ class MyUserList extends StatelessWidget {
   SizedBox _assignmentStatusCard(BuildContext context, UserModel user) {
     return SizedBox(
       child: Card(
-        color: state.colorCondition(context, user.assignment.toString()),
+        color: widget.state.colorCondition(context, user.assignment.toString()),
         child: Padding(
           padding: const PagePadding.allLow(),
           child: Text(
@@ -110,13 +122,13 @@ class MyUserList extends StatelessWidget {
   }
 }
 
-_showModal(BuildContext context, corp, state) {
+_showModal(BuildContext context, corp, state, setState) {
   return showModalBottomSheet(
       context: context,
       builder: (context) {
         return Container(
           color: context.colorScheme.background,
-          height: context.dynamicHeight(.4),
+          height: context.dynamicHeight(.45),
           child: Column(
             children: [
               context.emptySizedHeightBoxLow3x,
@@ -128,7 +140,7 @@ _showModal(BuildContext context, corp, state) {
                 child: ListView.builder(
                   itemCount: corp.length,
                   itemBuilder: ((context, index) {
-                    return _therapistButton(context, state, corp, index);
+                    return _therapistButton(context, state, corp, index, setState);
                   }),
                 ),
               ),
@@ -146,7 +158,7 @@ ProductText _assignTitle(BuildContext context) {
   );
 }
 
-CustomElevatedButton _therapistButton(BuildContext context, state, corp, int index) {
+CustomElevatedButton _therapistButton(BuildContext context, state, corp, int index, setState) {
   return CustomElevatedButton(
     color: context.colorScheme.primary,
     height: context.dynamicHeight(.08),
@@ -159,6 +171,7 @@ CustomElevatedButton _therapistButton(BuildContext context, state, corp, int ind
       debugPrint(corp[index].userID.toString());
       await firebaseService.corpAssign(state.toString(), corp[index].userID.toString());
       await firebaseService.setAssign(state.toString(), LocaleKeys.assignment_therapist.tr());
+      setState(() {});
     },
     child: ProductText.headline3(
       "${corp[index].name}  ${corp[index].surname}",

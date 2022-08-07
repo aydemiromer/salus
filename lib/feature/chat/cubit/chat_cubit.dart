@@ -30,6 +30,7 @@ class ChatCubit extends Cubit<ChatState> {
 
     changeStatusPerson(userID ?? '', status);
     tokenForNotification(userID.toString());
+    await getSpecialMessages();
   }
 
   Future tokenForNotification(String userID) async {
@@ -64,6 +65,15 @@ class ChatCubit extends Cubit<ChatState> {
     emit(state.copyWith(userList: response, isLoading: false));
 
     return response;
+  }
+
+  Future<List> getSpecialMessages() async {
+    final prefs = await SharedPreferences.getInstance();
+    final String? userID = prefs.getString(FirebaseEnums.userUID.name);
+
+    var res = await firebaseService.getLastMessages(userID.toString(), state.userList!);
+    print(res);
+    return [];
   }
 
   Stream<List<ChatModel>> getMessages(String userID, String otherUserID) {

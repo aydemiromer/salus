@@ -36,16 +36,35 @@ class _ChatDetailViewState extends State<ChatDetailView> with WidgetsBindingObse
   @override
   late final TextEditingController? _textController;
   final ScrollController _scrollController = ScrollController();
+  bool _firstAutoscrollExecuted = false;
+  bool _shouldAutoscroll = false;
+
+  void _scrollListener() {
+    _firstAutoscrollExecuted = true;
+
+    if (_scrollController.hasClients &&
+        _scrollController.position.pixels == _scrollController.position.maxScrollExtent) {
+      _shouldAutoscroll = true;
+    } else {
+      _shouldAutoscroll = false;
+    }
+  }
 
   @override
   void initState() {
     super.initState();
     _textController = TextEditingController();
+    //_scrollController.addListener(_scrollDown);
+  }
+
+  void _scrollDown() {
+    _scrollController.jumpTo(_scrollController.position.maxScrollExtent);
   }
 
   @override
   void dispose() {
     _textController?.dispose();
+    _scrollController.removeListener(_scrollListener);
     super.dispose();
   }
 
@@ -61,7 +80,7 @@ class _ChatDetailViewState extends State<ChatDetailView> with WidgetsBindingObse
             builder: ((context, state) => Scaffold(
                   backgroundColor: context.colorScheme.onBackground,
                   appBar: _appbar(state),
-                  body: _body(context, widget.model, _textController, state, _scrollController),
+                  body: _body(context, widget.model, _textController, state, _scrollController, _scrollDown),
                 ))));
   }
 }
@@ -70,7 +89,8 @@ AppBarWidget _appbar(state) => AppBarWidget(
       state: state,
     );
 
-Widget _body(BuildContext context, UserModel user, textController, ChatState state, scrollController) => Column(
+Widget _body(BuildContext context, UserModel user, textController, ChatState state, scrollController, scrollDown) =>
+    Column(
       children: [
         _DetailListTile(user: user, state: state),
         const GrayDivider(),
@@ -79,6 +99,7 @@ Widget _body(BuildContext context, UserModel user, textController, ChatState sta
           user: user,
           textController: textController,
           state: state,
+          fun: scrollDown,
         )
       ],
     );
@@ -91,6 +112,7 @@ Expanded _streamMessages(BuildContext context, UserModel user, ChatState state, 
       stream: context.read<ChatCubit>().getMessages(state.userUID.toString(), user.userID.toString()),
       builder: (context, streamMessages) {
         var allMessages = streamMessages.data;
+
         return ListView.builder(
             controller: scrollController,
             itemBuilder: ((context, index) {

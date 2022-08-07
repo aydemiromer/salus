@@ -25,4 +25,6 @@ abstract class IFirebaseService {
   Future registerUser(String userID, String name, String email, String surname);
 
   Future updateProfile(String name, String surname);
+
+  Future getLastMessages(String userID, List usersID);
 }

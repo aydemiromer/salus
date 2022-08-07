@@ -1,10 +1,12 @@
 part of '../chat_detail_view.dart';
 
 class ChatTextField extends StatelessWidget {
-  ChatTextField({Key? key, this.textController, required this.user, required this.state}) : super(key: key);
+  ChatTextField({Key? key, this.textController, required this.user, required this.state, required this.fun})
+      : super(key: key);
   TextEditingController? textController;
   UserModel user;
   ChatState state;
+  Function fun;
 
   @override
   Widget build(BuildContext context) {
@@ -33,11 +35,10 @@ class ChatTextField extends StatelessWidget {
                 final String? userID = prefs.getString(FirebaseEnums.userUID.name);
                 ChatModel currentMessage =
                     ChatModel(getter: user.userID, sender: userID, whoIsThis: true, message: textController!.text);
-                // ignore: use_build_context_synchronously
                 var result = await context.read<ChatCubit>().saveMessages(currentMessage, userID.toString());
                 // ignore: unused_local_variable
                 IFirebaseNotificationService? firebaseService;
-
+                fun;
                 await NotificationService()
                     .sendNotification(user.deviceToken, textController!.text.toString(), userID.toString());
 

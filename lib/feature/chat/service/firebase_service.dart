@@ -56,10 +56,6 @@ class FireStoreService extends IFirebaseService {
   Future getAndPushToken(String userID) async {
     try {
       String? tokenId = await FirebaseMessaging.instance.getToken();
-      await fireStore
-          .collection(FirebaseEnums.users.name)
-          .doc(userID)
-          .update({FirebaseEnums.deviceToken.name: tokenId});
     } catch (e) {
       return null;
     }
@@ -68,6 +64,21 @@ class FireStoreService extends IFirebaseService {
   Future getUserInformations(String userID) async {
     try {
       await fireStore.collection(FirebaseEnums.users.name).doc(userID).get();
+    } catch (e) {
+      return null;
+    }
+  }
+
+  @override
+  Future getLastMessages(String userID, List usersID) async {
+    try {
+      List<UserModel> x = [];
+      for (var i = 0; i < userID.length; i++) {
+        final res =
+            await fireStore.collection(FirebaseEnums.chat.name).doc("${userID}1to1${usersID[i]['userID']}").get();
+        x.add(UserModel(message: res['message'].toString(), userID: usersID[i]));
+      }
+      return x;
     } catch (e) {
       return null;
     }
@@ -116,7 +127,7 @@ class FireStoreService extends IFirebaseService {
         .doc("${userID}1to1$otherUserID")
         .collection(FirebaseEnums.message.name)
         .orderBy(FirebaseEnums.date.name)
-        .limit(10)
+        .limit(20)
         .snapshots();
     return snapShot.map((mesajListesi) => mesajListesi.docs.map((mesaj) => ChatModel.fromMap(mesaj.data())).toList());
   }
@@ -146,8 +157,8 @@ class FireStoreService extends IFirebaseService {
         .doc(messageId)
         .set(savedMessage);
 
-    await fireStore.collection(FirebaseEnums.users.name).doc(message.sender).update({
-      FirebaseEnums.message.name: message.message,
+    await fireStore.collection(FirebaseEnums.chat.name).doc(receiverDocumentID).set({
+      "message": message.message,
     });
     return true;
   }
