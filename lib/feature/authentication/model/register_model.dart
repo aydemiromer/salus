@@ -1,6 +1,6 @@
 class RegisterModel {
-  final String name;
-  final String surname;
+  String? name;
+  String? surname;
   final String email;
   final String password;
 

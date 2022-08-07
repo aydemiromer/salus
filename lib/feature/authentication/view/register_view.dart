@@ -47,8 +47,10 @@ class RegisterView extends StatelessWidget {
                       ),
                       const SizedBox(height: WidgetSizes.spacingM),
                       SignUpForm(
-                        onSuccses: (email, password) async {
-                          await context.read<AuthenticationCubit>().loginCustom(email, password, context);
+                        onSuccses: (email, password, name, surname) async {
+                          await context
+                              .read<AuthenticationCubit>()
+                              .registerUser(email, password, name, surname, context);
                         },
                       ),
                       context.emptySizedHeightBoxNormal

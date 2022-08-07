@@ -62,6 +62,20 @@ class FireStoreService extends IFirebaseService {
   }
 
   @override
+  Future registerUser(String userID, String name, String email, String surname) async {
+    print("Kullanıcı Eklenme Sistemi");
+    try {
+      await fireStore
+          .collection(FirebaseEnums.users.name)
+          .doc(userID)
+          .set({"name": name, "surname": surname, "email": email, "userID": userID, "role": "personal"});
+    } catch (e) {
+      return null;
+    }
+    return null;
+  }
+
+  @override
   Future corpAssign(String userID, String corpID) async {
     try {
       await fireStore.collection(FirebaseEnums.users.name).doc(userID).update({"corp": corpID});

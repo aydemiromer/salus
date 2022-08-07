@@ -7,7 +7,7 @@ import '../../../core/utility/padding/page_padding.dart';
 import '../../../core/utility/size/widget_size.dart';
 import '../../../core/widget/button/loading_button.dart';
 
-typedef SignInSuccess = Future<void> Function(String email, String password);
+typedef SignInSuccess = Future<void> Function(String email, String password, String name, String surname);
 
 class SignUpForm extends StatefulWidget {
   const SignUpForm({Key? key, required this.onSuccses}) : super(key: key);
@@ -74,7 +74,8 @@ class _SignUpFormState extends State<SignUpForm> {
           padding: const PagePadding.all(), shape: RoundedRectangleBorder(borderRadius: context.lowBorderRadius)),
       onPressed: () async {
         if (_formKey.currentState?.validate() ?? false) {
-          await widget.onSuccses(_emailController.text, _passwordController.text);
+          await widget.onSuccses(
+              _emailController.text, _passwordController.text, _nameController.text, _surnameController.text);
         } else {
           setState(() {
             isFirstValidate = true;
@@ -157,7 +158,7 @@ class _SignUpFormState extends State<SignUpForm> {
           prefixIcon: const Icon(Icons.person),
           border: OutlineInputBorder(borderRadius: context.lowBorderRadius),
           label: const Text("Name")),
-      validator: (value) => (value ?? '').isValidEmail ? null : "",
+      validator: (value) => (value ?? '').isNotEmpty ? null : "",
     );
   }
 
@@ -173,7 +174,7 @@ class _SignUpFormState extends State<SignUpForm> {
           prefixIcon: const Icon(Icons.person),
           border: OutlineInputBorder(borderRadius: context.lowBorderRadius),
           label: const Text("Surname")),
-      validator: (value) => (value ?? '').isValidEmail ? null : "",
+      validator: (value) => (value ?? '').isNotEmpty ? null : "",
     );
   }
 }

@@ -2,12 +2,13 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:salus/feature/authentication/model/register_model.dart';
+import 'package:salus/feature/authentication/view/login_view.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../product/state/user_context.dart';
 import '../../../product/widget/navbar/navbar_widget.dart';
 import '../model/login_model.dart';
-import '../model/register_model.dart';
 import '../service/auth_service.dart';
 
 part 'authentication_state.dart';
@@ -37,18 +38,20 @@ class AuthenticationCubit extends Cubit<AuthtenticationState> {
     return null;
   }
 
-  Future<bool?> registerUser(RegisterModel model) async {
-    final response = await authenticationService.registerCustom(model);
+  Future<bool?> registerUser(String email, String password, String name, String surname, context) async {
+    final response =
+        await authenticationService.registerCustom(RegisterModel(name, surname, email, password), name, surname);
     if (response != null) {
-      await _addUserToDatabase(model, response);
       emit(state.copyWith(userUid: response.user?.uid));
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const LoginView()),
+      );
 
       return true;
     }
     return null;
   }
-
-  Future<void> _addUserToDatabase(RegisterModel model, UserCredential credential) async {}
 
   Future<bool?> signInWithGoogle() async {
     final response = await authenticationService.signinGoogleCustom();

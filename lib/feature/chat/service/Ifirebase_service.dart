@@ -21,4 +21,6 @@ abstract class IFirebaseService {
   Future corpAssign(String userID, String corpID);
 
   Future getAndPushToken(String userID);
+  
+  Future registerUser(String userID, String name, String email, String surname);
 }
