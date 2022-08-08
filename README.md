@@ -82,3 +82,24 @@ Features available in the app
 The application summary is as follows, after the user logs in, the admin greets him. After the user talks to the admin via chat, the admin assigns a therapist to the user. Then, the user has a meeting with the therapist. The user has a page where he can update his name and surname. Users' online and offline statuses are under control, such as whether a therapist is appointed.
 
 
+# Application ScreenShoots
+  <table>
+  <tr>
+  <td><img width="297" alt="Screen Shot 2022-08-08 at 08 26 03" src="https://user-images.githubusercontent.com/45129432/183347207-31641ee5-8cb8-47e5-bddc-62dd16b3b6ae.png" ></td>
+    <td><img width="291" alt="Screen Shot 2022-08-08 at 08 36 48" src="https://user-images.githubusercontent.com/45129432/183346976-aeaacd9e-6b83-4b9d-a957-dd748c205173.png" ></td>
+    <td><img width="291" alt="Screen Shot 2022-08-08 at 08 37 33" src="https://user-images.githubusercontent.com/45129432/183347108-1bc64c62-defd-4f3b-9bfc-ed37769d1fd9.png" ></td>
+   </td>
+   
+    
+  </tr>
+ <td><img width="294" alt="Screen Shot 2022-08-08 at 08 34 43" src="https://user-images.githubusercontent.com/45129432/183347143-1fe5cff9-afdb-4e76-bd04-2f432b9a6801.png" >
+  <td><img width="293" alt="Screen Shot 2022-08-08 at 08 32 49" src="https://user-images.githubusercontent.com/45129432/183347164-edc17717-34bb-4acf-b9a0-0eb971d851da.png" ></td>
+  <td><img width="295" alt="Screen Shot 2022-08-08 at 08 29 47" src="https://user-images.githubusercontent.com/45129432/183347188-2c2a442a-1b78-41bf-b2f9-44d3d9126e07.png"></td>
+  
+  </table>
+
+
+
+
+
+
