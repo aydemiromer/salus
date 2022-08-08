@@ -2,6 +2,12 @@
 
 This app is about users being able to chat with therapists easily.
 
+App APK
+```bash
+https://drive.google.com/file/d/1zypXyLWP4nSmIAl5ZQqTyUk0uq2A4oHm/view?usp=sharing 
+
+```
+
 ## Getting Started
 
 Flutter SDK Version => 3.0.4
