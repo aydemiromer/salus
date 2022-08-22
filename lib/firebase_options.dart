@@ -49,21 +49,5 @@ class DefaultFirebaseOptions {
     }
   }
 
-  static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyCf8MwuCVLYKlaOcAqgAZY0zJpavU9vfdk',
-    appId: '1:985016749874:android:ee61d4e4199226a5c0d12b',
-    messagingSenderId: '985016749874',
-    projectId: 'salus-7a691',
-    storageBucket: 'salus-7a691.appspot.com',
-  );
-
-  static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyDQBg2EcJaug4MPDCDoLLSYBGdJziOVa58',
-    appId: '1:985016749874:ios:c430f4c7abfd344bc0d12b',
-    messagingSenderId: '985016749874',
-    projectId: 'salus-7a691',
-    storageBucket: 'salus-7a691.appspot.com',
-    iosClientId: '985016749874-jod5subujq4thcqstvt5ju36f8fqn5vb.apps.googleusercontent.com',
-    iosBundleId: 'com.example.salus',
-  );
+ 
 }
