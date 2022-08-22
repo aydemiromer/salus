@@ -2,19 +2,6 @@
 
 This app is about users being able to chat with therapists easily.
 
-App APK
-```bash
-https://drive.google.com/file/d/1zypXyLWP4nSmIAl5ZQqTyUk0uq2A4oHm/view?usp=sharing 
-
-```
-
-
-App Video (Please Watch)
-
-```bash
-https://drive.google.com/file/d/1tx1Pr3HlqiTY1qW-D1VnYRBhzrBXtC_N/view?usp=sharing
-
-```
 
 
 ## Getting Started
