@@ -8,8 +8,8 @@ class NotificationService extends IFirebaseNotificationService {
   Future sendNotification(String? token, String? message, String? name) async {
     
     String endURL = "https://fcm.googleapis.com/fcm/send";
-    String firebaseKey =
-        "AAAA5VeSzzI:APA91bFvk-Sdyij_QYYayxrGt7tNAI0dWFzWJYqL1hFrH8w8J4uJsgzrNdD24dTg_d6TGIPaxwL7ItdcskxrLTzeXoHt-_oIECfO4aC9eyPtMPXL6B7kxvXtrZ7d4ERqAiaVbWLABYNY";
+    String firebaseKey = "key";
+        
     Map<String, String> headers = {"Content-type": "application/json", "Authorization": "key=$firebaseKey"};
 
     String json =
